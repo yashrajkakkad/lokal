@@ -1,13 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const dbConfig = require("./config/db.config");
-const { authMiddleware } = require("./src/middlewares/authUser");
+const mongoose = require("mongoose").set("debug", true);
+const dbConfig = require("./src/configs/db.config");
+// const { authMiddleware } = require("./src/middlewares/authUser");
 
 // router files
-const authRouter = require("./src/routes/auth.routes");
-const userRouter = require("./src/routes/user.routes");
-const challengeRouter = require("./src/routes/challenge.routes");
+const authRouter = require("./src/routes/auth.route");
+const userRouter = require("./src/routes/user.route");
+// const challengeRouter = require("./src/routes/challenge.routes");
 
 const app = express();
 
@@ -23,11 +24,11 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const db = require("./src/models");
-const middlewares = require("./src/middlewares");
-const Role = db.role;
+// const db = require("./src/models");
+// const middlewares = require("./src/middlewares");
+// const Role = db.role;
 
-db.mongoose
+mongoose
   .connect(`${dbConfig.URL}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -47,8 +48,8 @@ app.get("/", (req, res) => {
 });
 
 // routes
-app.use("/api", authRouter);
-app.use("/api", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 // app.use("/api", authMiddleware, challengeRouter);
 
 // set port, listen for requests
