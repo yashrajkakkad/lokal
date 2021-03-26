@@ -1,0 +1,23 @@
+{
+  "name": "Lokal",
+  "description": "A peer-to-peer live interactive community for students",
+  "author": "Aman Dave <amandave1999@gmail.com>",
+  "license": "UNLICENSED",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "cd server&&npm run start",
+    "client": "cd client&&npm run start",
+    "server": "cd server&&npm run start",
+    "dev": "concurrently \"yarn client\" \"yarn server\""
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0"
+  },
+  "dependencies": {
+    "install": "^0.12.2"
+  }
+}
