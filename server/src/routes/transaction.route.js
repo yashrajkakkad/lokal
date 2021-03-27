@@ -56,17 +56,38 @@ router.put("/update/transaction", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 router.post("/create", async (req, res) => {
   const transaction = new TransactionModel(req.body);
   const userTier = await UserTierModel.findOne({
     storeId: req.body.storeId,
     userId: req.body.userId,
   });
+=======
+router.post("/add/transaction", async (req, res) => {
+  const transaction = new ModelTransaction(req.body);
+  // const userTier = await UserTierModel.findOne({storeId : req.body.storeId, userId : req.body.userId});
+  // const tier = await TierModel.findOne(userTier["tier"]);
+  // const store = await StoreModel.findOne(req.body.storeId);
+  // const tiers = store['tiers'];
+>>>>>>> f443c1d3b0d945062043ca36b850ed7b3e026fa6
 
   try {
     await transaction.save();
-    userTier["totalAmount"] += transaction["amount"];
-    await userTier.save();
+    // // Update total amount
+    // userTier["totalAmount"] += transaction["amount"];
+    // // TODO: Change user level
+    // if(userTier["totalAmount"] > tier["maxValue"]) {
+    //   // Find all tiers corresponding to the user
+    //   try {
+    //     const nextTier = tiers.findOne({'number' : tier['number']+1});
+    //   } catch (e) {
+
+    //   };
+    
+    // }
+    // await userTier.save();
+
     // const totalAmount = await TotalAmountModel.findOneAndUpdate({storeId: req.body.storeId, userId: req.body.userId}, );
 
     // const logAdd = new ModelLog({

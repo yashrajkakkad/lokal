@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const crypto = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const config = require("../configs/auth.config");
-const { UserTypeEnum } = require("../enums/user.enum");
+// const { UserTypeEnum } = require("../enums/user.enum");
 
 const userType = Object.freeze({
   MEMBER: "member",
@@ -21,6 +21,7 @@ const UserSchema = mongoose.Schema(
     },
     password: {
       type: String,
+      required: true,
     },
     type: {
       type: String,
