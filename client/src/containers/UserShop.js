@@ -1,10 +1,25 @@
-import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import {
+    Avatar,
 
+
+    Box, Card, CardHeader, Divider, List, ListItem,
+    ListItemAvatar, ListItemText,
+
+
+
+
+    Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel,
+    Tooltip
+} from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import React from "react";
+import logo from "../assets/userLogo.jpg";
+import CircularProgressBar from "../components/CircularProgressBar";
 import StoreHeader from "../components/StoreHeader";
-import { Card, LinearProgress } from "@material-ui/core";
+
+const shop = [
+    { title: "Demo Shop" },
+];
 
 const transactions = [
     { amount: 1000, date: "13/03/2021" },
@@ -33,61 +48,180 @@ const styles = (theme) => ({
         marginBottom: 20,
         padding: 10,
     },
+    avatar: {
+        marginRight: "8px",
+    },
+    shopCard: {
+        width: "90%",
+        marginTop: 10,
+        padding: "10px 10px",
+    },
+    transCard: {
+        width: "90%",
+        marginTop: 10,
+        marginBottom: 10,
+        padding: "10px 10px",
+    },
+    shopContainer: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    },
 });
 
 const UserShop = (props) => {
     const { classes } = props;
 
-    const [expandedA, setExpandedA] = useState(false);
-    const [expandedB, setExpandedB] = useState(false);
+    // const [expandedA, setExpandedA] = useState(false);
+    // const [expandedB, setExpandedB] = useState(false);
 
-    const handleExpandedA = () => {
-        setExpandedA(!expandedA);
-    };
+    // const handleExpandedA = () => {
+    //     setExpandedA(!expandedA);
+    // };
 
-    const handleExpandedB = () => {
-        setExpandedB(!expandedB);
-    };
+    // const handleExpandedB = () => {
+    //     setExpandedB(!expandedB);
+    // };
 
     return (
         <div className={classes.screen}>
-            <StoreHeader>Demo Shop</StoreHeader>
+            <StoreHeader>
+                <Avatar className={classes.avatar}>
+                    <img
+                        alt={shop.title}
+                        src={logo}
+                        style={{
+                            height: 48,
+                            width: 48
+                        }}
+                    />
+                </Avatar>
+                Demo Shop
+            </StoreHeader>
             <div className={classes.container}>
-                <div
-                    className={classes.levelIndicator}
-                    onClick={handleExpandedA}
-                >
-                    <div>Noob</div>
-                    {expandedA ? (
-                        <KeyboardArrowUpIcon />
-                    ) : (
-                        <KeyboardArrowDownIcon />
-                    )}
+                {/* <LinearProgress variant="determinate" value={80} /> */}
+                <CircularProgressBar />
+                <div className={classes.shopContainer}>
+                    <Card className={classes.shopCard}>
+                        <CardHeader
+                            style={{ padding: "4px", paddingTop: "2px" }}
+                            title="Current tier"
+                        />
+                        <Divider />
+                        <List
+                            style={{ padding: "1px 0px 1px 0px" }}
+                        >
+                            <ListItem
+                                style={{ padding: "6px 4px 6px 4px" }}
+                                onClick={() => {
+                                    props.history.push("/userShop");
+                                }}
+                            >
+                                <ListItemAvatar>
+                                    <img
+                                        alt={shop.title}
+                                        src={logo}
+                                        style={{
+                                            height: 48,
+                                            width: 48
+                                        }}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={"Noob"}
+                                    secondary={`desc`}
+                                />
+                            </ListItem>
+                        </List>
+                    </Card>
                 </div>
-                {expandedA ? (
-                    <Card className={classes.descCard}>Desc 1</Card>
-                ) : null}
-                <LinearProgress variant="determinate" value={80} />
-                <div
-                    className={classes.levelIndicator}
-                    onClick={handleExpandedB}
-                >
-                    <div>Amatuer</div>
-                    {expandedB ? (
-                        <KeyboardArrowUpIcon />
-                    ) : (
-                        <KeyboardArrowDownIcon />
-                    )}
+                <div className={classes.shopContainer}>
+                    <Card className={classes.shopCard}>
+                        <CardHeader
+                            style={{ padding: "4px", paddingTop: "2px" }}
+                            title="Next tier"
+                        />
+                        <Divider />
+                        <List
+                            style={{ padding: "1px 0px 1px 0px" }}
+                        >
+                            <ListItem
+                                style={{ padding: "6px 4px 6px 4px" }}
+                                onClick={() => {
+                                    props.history.push("/userShop");
+                                }}
+                            >
+                                <ListItemAvatar>
+                                    <img
+                                        alt={shop.title}
+                                        src={logo}
+                                        style={{
+                                            height: 48,
+                                            width: 48
+                                        }}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={"Amateur"}
+                                    secondary={`desc`}
+                                />
+                            </ListItem>
+                        </List>
+                    </Card>
                 </div>
-                {expandedB ? (
-                    <Card className={classes.descCard}>Desc 2</Card>
-                ) : null}
-                <div>Recent Transactions</div>
+                <div className={classes.shopContainer}>
+                    <Card className={classes.transCard}>
+                        <CardHeader title="Recent transactions" />
+                        <Divider />
+                        {/* <PerfectScrollbar> */}
+                        <Box sx={{ minWidth: 800 }}>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>
+                                            Transaction amount
+                            </TableCell>
+                                        <TableCell sortDirection="desc">
+                                            <Tooltip
+                                                enterDelay={300}
+                                                title="Sort"
+                                            >
+                                                <TableSortLabel
+                                                    active
+                                                    direction="desc"
+                                                >
+                                                    Date
+                                </TableSortLabel>
+                                            </Tooltip>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {transactions.map((transaction, key) => (
+                                        <TableRow
+                                            hover
+                                            key={key}
+                                        >
+                                            <TableCell>
+                                                {transaction.amount}
+                                            </TableCell>
+                                            <TableCell>
+                                                {transaction.date}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Box>
+                        {/* </PerfectScrollbar> */}
+                    </Card>
+                </div>
+                {/* <div>Recent Transactions</div>
                 {transactions.map((txn, key) => (
                     <div key={key}>
                         {txn.amount}, {txn.date}
                     </div>
-                ))}
+                ))} */}
             </div>
         </div>
     );

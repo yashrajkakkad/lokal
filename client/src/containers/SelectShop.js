@@ -1,16 +1,22 @@
-import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import {
     Button,
     Card,
+    CardHeader,
     Dialog,
     DialogActions,
     DialogTitle,
-    TextField,
-} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
 
+    Divider,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText, TextField
+} from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import AddIcon from '@material-ui/icons/Add';
+import React, { useState } from "react";
 import logo from "../assets/userLogo.jpg";
+
 
 const shops = [
     { title: "Demo Shop" },
@@ -48,7 +54,7 @@ const styles = (theme) => ({
     shopCard: {
         width: "80%",
         marginBottom: 20,
-        padding: "20px 15px",
+        padding: "10px 10px",
     },
     shopContainer: {
         display: "flex",
@@ -100,7 +106,7 @@ const SelectShop = (props) => {
                 <div className={classes.userName}>John Doe</div>
             </div>
             <div className={classes.shopContainer}>
-                {shops.map((shop, key) => (
+                {/* {shops.map((shop, key) => (
                     <Card
                         key={key}
                         className={classes.shopCard}
@@ -110,7 +116,49 @@ const SelectShop = (props) => {
                     >
                         {shop.title}
                     </Card>
-                ))}
+                ))} */}
+                <Card className={classes.shopCard}>
+                    <CardHeader
+                        style={{ padding: "4px", paddingTop: "2px" }}
+                        title="Available shops"
+                    />
+                    <Divider />
+                    <List
+                        style={{ padding: "1px 0px 1px 0px" }}
+                    >
+                        {shops.map((shop, key) => (
+                            <ListItem
+                                style={{ padding: "6px 4px 6px 4px" }}
+                                divider={key < shops.length - 1}
+                                key={key}
+                                onClick={() => {
+                                    props.history.push("/userShop");
+                                }}
+                            >
+                                <ListItemAvatar>
+                                    <img
+                                        alt={shop.title}
+                                        src={logo}
+                                        style={{
+                                            height: 48,
+                                            width: 48
+                                        }}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={shop.title}
+                                    secondary={`subtitle`}
+                                />
+                                {/* <IconButton
+                            edge="end"
+                            size="small"
+                        >
+                            <MoreVertIcon />
+                        </IconButton> */}
+                            </ListItem>
+                        ))}
+                    </List>
+                </Card>
             </div>
             <div
                 className={classes.newButton}
@@ -128,13 +176,13 @@ const SelectShop = (props) => {
                 fullWidth
             >
                 <DialogTitle className={classes.dialogTitle}>
-                    Enter Store ID
+                    Enter Store's UPI ID
                 </DialogTitle>
                 <div className={classes.textContainer}>
                     <TextField
                         className={classes.dialogText}
                         variant="outlined"
-                        placeholder="Store ID"
+                        placeholder="UPI ID"
                         value={storeId}
                         onChange={(e) => {
                             setStoreId(e.target.value);
