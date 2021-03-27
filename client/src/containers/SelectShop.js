@@ -11,6 +11,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 
 import logo from "../assets/userLogo.jpg";
+import { useSelector } from "react-redux";
 
 const shops = [
     { title: "Demo Shop" },
@@ -86,6 +87,9 @@ const styles = (theme) => ({
 const SelectShop = (props) => {
     const { classes } = props;
 
+    const fName = useSelector(state => state.auth.firstName)
+    const lName = useSelector(state => state.auth.lastName)
+
     const [dialogOpen, setDialogOpen] = useState(false);
     const [storeId, setStoreId] = useState("");
 
@@ -93,11 +97,13 @@ const SelectShop = (props) => {
         setDialogOpen(false);
     };
 
+    console.log(fName, lName)
+
     return (
         <div className={classes.screen}>
             <div className={classes.nameBar}>
                 <img src={logo} alt="logo" className={classes.logo} />
-                <div className={classes.userName}>John Doe</div>
+                <div className={classes.userName}>{fName} {lName}</div>
             </div>
             <div className={classes.shopContainer}>
                 {shops.map((shop, key) => (
@@ -134,7 +140,7 @@ const SelectShop = (props) => {
                     <TextField
                         className={classes.dialogText}
                         variant="outlined"
-                        placeholder="Store ID"
+                        placeholder="Store UPI ID"
                         value={storeId}
                         onChange={(e) => {
                             setStoreId(e.target.value);

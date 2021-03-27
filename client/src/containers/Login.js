@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Card, TextField } from "@material-ui/core";
 import { CircularProgress } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+
+import * as authActions from "../store/actions/auth";
 
 const styles = (theme) => ({
     screen: {
@@ -43,6 +46,7 @@ const styles = (theme) => ({
 
 const LoginPage = (props) => {
     const { classes } = props;
+    const dispatch = useDispatch();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -58,8 +62,23 @@ const LoginPage = (props) => {
 
     const submitHandler = () => {
         setIsLoading(true);
-        console.log(username, password);
-        props.history.push("/selectShop");
+        const user = {
+            username: username,
+            password: password,
+        };
+        dispatch(authActions.login(user))
+            .then((res) => {
+                // console.log(res);
+                if (res.type === "member") {
+                    props.history.push("/selectShop");
+                } else {
+                    props.history.push("/ownerSelectShop");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
     };
 
     return (

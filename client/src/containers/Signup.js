@@ -5,6 +5,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { useDispatch } from "react-redux";
+
+import * as authActions from "../store/actions/auth";
 
 const styles = (theme) => ({
     screen: {
@@ -51,8 +54,14 @@ const styles = (theme) => ({
 const SignupPage = (props) => {
     const { classes } = props;
 
+    const dispatch = useDispatch();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [category, setCategory] = React.useState("");
 
@@ -70,14 +79,54 @@ const SignupPage = (props) => {
 
     const submitHandler = () => {
         setIsLoading(true);
-        console.log(username, password, category);
-        props.history.push("/selectShop");
+        const user = {
+            username: username,
+            email: email,
+            password: password,
+            type: category,
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phone,
+        };
+        dispatch(authActions.signUp(user))
+            .then((res) => {
+                // console.log("Res: ", res);
+                if (res.type === "member") {
+                    props.history.push("/selectShop");
+                } else {
+                    props.history.push("/ownerSelectShop");
+                }
+            })
+            .catch((err) => {
+                console.log("Err: ", err);
+                setIsLoading(false);
+            });
     };
 
     return (
         <div className={classes.screen}>
             <Card className={classes.baseCard}>
                 <div className={classes.cardTitle}>SIGN UP</div>
+                <TextField
+                    className={classes.marginStyle}
+                    label="First Name"
+                    variant="outlined"
+                    value={firstName}
+                    fullWidth
+                    onChange={(e) => {
+                        setFirstName(e.target.value);
+                    }}
+                />
+                <TextField
+                    className={classes.marginStyle}
+                    label="Last Name"
+                    variant="outlined"
+                    value={lastName}
+                    fullWidth
+                    onChange={(e) => {
+                        setLastName(e.target.value);
+                    }}
+                />
                 <TextField
                     className={classes.marginStyle}
                     label="Username"
@@ -88,12 +137,34 @@ const SignupPage = (props) => {
                 />
                 <TextField
                     className={classes.marginStyle}
+                    label="Email"
+                    variant="outlined"
+                    value={email}
+                    type="email"
+                    fullWidth
+                    onChange={(e) => {
+                        setEmail(e.target.value);
+                    }}
+                />
+                <TextField
+                    className={classes.marginStyle}
                     label="Password"
                     variant="outlined"
                     value={password}
                     fullWidth
                     type="password"
                     onChange={passwordHandler}
+                />
+                <TextField
+                    className={classes.marginStyle}
+                    label="Phone"
+                    variant="outlined"
+                    value={phone}
+                    fullWidth
+                    type="number"
+                    onChange={(e) => {
+                        setPhone(e.target.value);
+                    }}
                 />
 
                 <FormControl variant="outlined" className={classes.formControl}>
@@ -107,7 +178,7 @@ const SignupPage = (props) => {
                         onChange={handleChange}
                         label="Age"
                     >
-                        <MenuItem value="customer">Customer</MenuItem>
+                        <MenuItem value="member">Customer</MenuItem>
                         <MenuItem value="owner">Owner</MenuItem>
                     </Select>
                 </FormControl>
