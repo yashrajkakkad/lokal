@@ -7,12 +7,12 @@ const PostSchema = mongoose.Schema(
             required: true,
         },
         creatorId: {
-            type: Number,
+            type: String,
             required: true,
             ref: "User",
         },
         storeId : {
-            type: Number,
+            type: String,
             required: true,
             ref: "Store",
         },

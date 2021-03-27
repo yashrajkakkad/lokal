@@ -6,13 +6,17 @@ const router = express.Router();
 // Get post by store id
 router.get("/posts/:storeId", async (req, res) => {
     try {
-        const posts = await PostModel.find({'storeId': req.params.storeId});
+        const storeId = req.params.storeId;
+        console.log(storeId);
+        const posts = await PostModel.find({storeId: storeId}).exec();
+        console.log(posts);
         res.status(200).send();
         // const store = await StoreModel.findById(req.params.storeId);
             // const postIds = store["postIds"];
         // Find all by Ids
         // const posts = await PostModel.findAllByIds
     } catch (e) {
+        console.log('Takleef');
         res.status(500).send();
     }
 });
@@ -21,7 +25,9 @@ router.get("/posts/:storeId", async (req, res) => {
 router.post("/posts", async (req, res) => {
     try {
         // const storeId = req.body.storeId;
+        console.log(req.body);
         const Post = new PostModel(req.body);
+        console.log("New post created");
         await Post.save();
         // const Store = StoreModel.findById(storeId);
         // // Will id be here?
@@ -31,6 +37,10 @@ router.post("/posts", async (req, res) => {
         // // Store["posts"]
     
     } catch(e) {
+        console.log("Takleef");
+        console.log(e);
         res.status(500).send();
     }
 });
+
+module.exports = router;
