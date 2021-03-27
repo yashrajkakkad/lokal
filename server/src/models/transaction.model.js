@@ -18,7 +18,7 @@ const TransactionSchema = mongoose.Schema(
     },
     comments: {
       type: String,
-    },
+    }, // status
   },
   {
     timestamps: {
