@@ -16,15 +16,15 @@ const StoreSchema = mongoose.Schema(
     description: {
       type: String,
     },
-    tiers: [ {
-      id : {
-        type: String,
-        ref: "Tier",
+    tiers: [
+      {
+        id: {
+          type: String,
+        },
+        level: {
+          type: Number,
+        },
       },
-      number : {
-        type: Number,
-      },
-    },
     ],
     cityName: {
       type: String,
@@ -33,6 +33,15 @@ const StoreSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    // postIds: [
+    //   {
+    //     postId: {
+    //       type: Number,
+    //       required: true,  
+    //       ref: "Post",
+    //     },
+    //   },
+    // ],
   },
   {
     timestamps: {

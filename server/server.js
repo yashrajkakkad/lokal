@@ -8,6 +8,11 @@ const dbConfig = require("./src/configs/db.config");
 // router files
 const authRouter = require("./src/routes/auth.route");
 const userRouter = require("./src/routes/user.route");
+const storeRouter = require("./src/routes/store.route");
+const tierRouter = require("./src/routes/tier.route");
+const transactionRouter = require("./src/routes/transaction.route");
+const sendgridRouter = require("./src/routes/sendgrid");
+const postRouter = require("./src/routes/post.route");
 // const challengeRouter = require("./src/routes/challenge.routes");
 
 const app = express();
@@ -50,6 +55,11 @@ app.get("/", (req, res) => {
 // routes
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/store", storeRouter);
+app.use("/api/store/tier", tierRouter);
+app.use("/api/store/transaction", transactionRouter);
+app.use("/api/sendgrid", sendgridRouter);
+app.use("/api/post", postRouter);
 // app.use("/api", authMiddleware, challengeRouter);
 
 // set port, listen for requests

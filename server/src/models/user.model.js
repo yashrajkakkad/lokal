@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
-const { UserTypeEnum } = require("../enums/user.enum");
+const crypto = require("crypto-js");
+const jwt = require("jsonwebtoken");
+const config = require("../configs/auth.config");
+// const { UserTypeEnum } = require("../enums/user.enum");
 
 const userType = Object.freeze({
   MEMBER: "member",
@@ -18,6 +21,7 @@ const UserSchema = mongoose.Schema(
     },
     password: {
       type: String,
+      required: true,
     },
     type: {
       type: String,
@@ -38,7 +42,19 @@ const UserSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-  },
+    credit: {
+      type: Number,
+      default: 100,
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  }, // credit, ownedStoreIds - default NULL
   {
     timestamps: {
       createdAt: "created_at",
@@ -47,19 +63,21 @@ const UserSchema = mongoose.Schema(
   }
 );
 
-UserSchema.statics.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ email });
+UserSchema.statics.findByCredentials = async (username, password) => {
+  const user = await User.findOne({ username });
 
+  console.log(user);
   if (!user) {
-    throw new Error("Unable to login");
+    throw new Error("No user found");
   }
 
   decryptedPassword = crypto.AES.decrypt(user.password, config.secret).toString(
     crypto.enc.Utf8
   );
+  console.log(decryptedPassword);
 
   if (decryptedPassword != password) {
-    throw new Error("Unable to login");
+    throw new Error("Password did not match");
   }
 
   return user;

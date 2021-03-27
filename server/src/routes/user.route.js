@@ -11,14 +11,15 @@ router.post("/createUser", async (req, res) => {
     const token = await user.generateAuthToken();
     res.status(201).send({ user, token });
   } catch (error) {
+    console.log(error);
     res.status(400).send();
   }
 });
 
-router.post("/users/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const user = await UserModel.findByCredentials(
-      req.body.email,
+      req.body.username,
       req.body.password
     );
     const token = await user.generateAuthToken();
@@ -90,6 +91,28 @@ router.delete("/users/me", auth, async (req, res) => {
     await req.user.remove();
     res.send(req.user);
   } catch (e) {
+    res.status(500).send();
+  }
+});
+
+router.get("/users/all", async (req, res) => {
+  try {
+    const users = await UserModel.find({});
+    return res.send(users);
+  } catch(e) {
+    console.log('Problem che bhai');
+    res.status(500).send();
+  }
+});
+
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await UserModel.findById(userId);
+    console.log(user);
+    return res.send(user);
+  } catch(e) {
+    console.log('Problem che bhai');
     res.status(500).send();
   }
 });

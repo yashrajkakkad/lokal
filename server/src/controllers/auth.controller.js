@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const UserModel = require("../models/user.model");
 const config = require("../configs/auth.config");
 const jwt = require("jwt-simple");
 
@@ -12,37 +12,37 @@ exports.signin = function (req, res, next) {
 };
 
 exports.signup = function (req, res, next) {
-  const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
 
-  if (!email || !password) {
+  if (!username || !password) {
     return res.status(422).json({
-      error: "You must provide email and password.",
+      error: "username or password not passed",
     });
   }
 
-  User.findOne({ email: email }, function (err, existingUser) {
+  UserModel.findOne({ username }, async (err, existingUser) => {
     if (err) {
       return next(err);
     }
 
     if (existingUser) {
       return res.status(422).json({
-        error: "Email is in use",
+        error: "username already exists",
       });
     }
 
-    const user = new User({
-      email: email,
-      password: password,
-    });
+    const user = new UserModel(req.body);
 
-    user.save(function (err) {
+    user.save(async (err) => {
       if (err) {
         return next(err);
       }
+
+      const token = await user.generateAuthToken();
       res.json({
-        token: tokenForUser(user),
+        user,
+        token,
       });
     });
   });

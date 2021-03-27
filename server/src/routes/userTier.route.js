@@ -1,44 +1,44 @@
 const express = require("express");
-const StoreModel = require("../models/store.model");
-const ModelLog = require("../models/log");
+const UserTierModel = require("../models/userTier.model");
+// const ModelLog = require("../models/log");
 
 const router = express.Router();
 
-router.get("/allStores", async (req, res) => {
+router.get("/allTiers", async (req, res) => {
   try {
-    const stores = await StoreModel.find({});
-    res.send(stores);
+    const tiers = await TierModel.find({});
+    res.send(tiers);
   } catch (e) {
     res.status(500).send();
   }
 });
 
-router.get("/store/:id", async (req, res) => {
+router.get("/tier/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const store = await StoreModel.findById(id);
-    if (!store) {
+    const tier = await TierModel.findById(id);
+    if (!tier) {
       return res.status(404).send();
     }
-    res.send(store);
+    res.send(tier);
   } catch (e) {
     res.status(500).send();
   }
 });
 
-router.put("/update/store", async (req, res) => {
+router.put("/update/tier", async (req, res) => {
   const updates = Object.keys(req.body);
 
   try {
-    const store = await StoreModel.findById(req.body.id);
-    if (!store) {
+    const tier = await TierModel.findById(req.body.id);
+    if (!tier) {
       return res.status(404).send();
     }
     updates.forEach((update) => {
-      store[update] = req.body[update];
+      tier[update] = req.body[update];
     });
-    await store.save();
+    await tier.save();
 
     // const logUpdate = new ModelLog({
     //   type: "Update",
@@ -55,31 +55,31 @@ router.put("/update/store", async (req, res) => {
   }
 });
 
-router.post("/add/item", async (req, res) => {
-  const store = new ModelStore(req.body);
+router.post("/join", async (req, res) => {
   try {
-    await store.save();
+    const userTier = new UserTierModel(req.body);
+    await userTier.save();
 
     // const logAdd = new ModelLog({
     //   type: "Create",
     //   time: new Date(),
-    //   itemid: store._id,
-    //   itemtitle: store.title,
+    //   itemid: tier._id,
+    //   itemtitle: tier.title,
     // });
 
     // await logAdd.save();
 
     res.status(200).send();
   } catch (e) {
-    res.status(500).send();
+    res.status(500).send(e);
   }
 });
 
-router.delete("/delete/store", async (req, res) => {
+router.delete("/delete/tier", async (req, res) => {
   const id = req.body.id;
   try {
-    const store = await StoreModel.findByIdAndDelete(id);
-    if (!store) {
+    const tier = await TierModel.findByIdAndDelete(id);
+    if (!tier) {
       return res.status(404).send();
     }
 
