@@ -104,4 +104,17 @@ router.get("/users/all", async (req, res) => {
     res.status(500).send();
   }
 });
+
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await UserModel.findById(userId);
+    console.log(user);
+    return res.send(user);
+  } catch(e) {
+    console.log('Problem che bhai');
+    res.status(500).send();
+  }
+});
+
 module.exports = router;
