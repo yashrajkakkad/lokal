@@ -104,7 +104,6 @@ router.post("/create", async (req, res) => {
     req.body.storeTiers.map((storeTier) => {
       tiers.push(storeTier);
     });
-    tiers.push();
     console.log(" -- intial but updated tier --");
     console.log(tiers);
     const storeTiers = await createTiers(tiers);

@@ -1,4 +1,5 @@
 const express = require("express");
+const { updateTier } = require("../controllers/user.controller");
 const TransactionModel = require("../models/transaction.model");
 const UserTierModel = require("../models/userTier.model");
 // const ModelLog = require("../models/log");
@@ -56,24 +57,17 @@ router.put("/update/transaction", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 router.post("/create", async (req, res) => {
   const transaction = new TransactionModel(req.body);
   const userTier = await UserTierModel.findOne({
     storeId: req.body.storeId,
     userId: req.body.userId,
   });
-=======
-router.post("/add/transaction", async (req, res) => {
-  const transaction = new ModelTransaction(req.body);
-  // const userTier = await UserTierModel.findOne({storeId : req.body.storeId, userId : req.body.userId});
-  // const tier = await TierModel.findOne(userTier["tier"]);
-  // const store = await StoreModel.findOne(req.body.storeId);
-  // const tiers = store['tiers'];
->>>>>>> f443c1d3b0d945062043ca36b850ed7b3e026fa6
 
   try {
     await transaction.save();
+
+    await updateTier(transaction);
     // // Update total amount
     // userTier["totalAmount"] += transaction["amount"];
     // // TODO: Change user level
@@ -84,7 +78,7 @@ router.post("/add/transaction", async (req, res) => {
     //   } catch (e) {
 
     //   };
-    
+
     // }
     // await userTier.save();
 

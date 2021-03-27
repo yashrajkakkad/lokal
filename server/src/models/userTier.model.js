@@ -17,11 +17,11 @@ const UserTierSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    tier: {
+    level: {
+      // tier level
       type: Number,
       required: true,
       default: 0,
-      ref: "Tier",
     },
   },
   {
