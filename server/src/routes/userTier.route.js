@@ -1,45 +1,44 @@
 const express = require("express");
-const TransactionModel = require("../models/transaction.model");
 const UserTierModel = require("../models/userTier.model");
 // const ModelLog = require("../models/log");
 
 const router = express.Router();
 
-router.get("/allTransactions", async (req, res) => {
+router.get("/allTiers", async (req, res) => {
   try {
-    const transactions = await TransactionModel.find({});
-    res.send(transactions);
+    const tiers = await TierModel.find({});
+    res.send(tiers);
   } catch (e) {
     res.status(500).send();
   }
 });
 
-router.get("/transaction/:id", async (req, res) => {
+router.get("/tier/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const transaction = await TransactionModel.findById(id);
-    if (!transaction) {
+    const tier = await TierModel.findById(id);
+    if (!tier) {
       return res.status(404).send();
     }
-    res.send(transaction);
+    res.send(tier);
   } catch (e) {
     res.status(500).send();
   }
 });
 
-router.put("/update/transaction", async (req, res) => {
+router.put("/update/tier", async (req, res) => {
   const updates = Object.keys(req.body);
 
   try {
-    const transaction = await TransactionModel.findById(req.body.id);
-    if (!transaction) {
+    const tier = await TierModel.findById(req.body.id);
+    if (!tier) {
       return res.status(404).send();
     }
     updates.forEach((update) => {
-      transaction[update] = req.body[update];
+      tier[update] = req.body[update];
     });
-    await transaction.save();
+    await tier.save();
 
     // const logUpdate = new ModelLog({
     //   type: "Update",
@@ -56,40 +55,31 @@ router.put("/update/transaction", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
-  const transaction = new TransactionModel(req.body);
-  const userTier = await UserTierModel.findOne({
-    storeId: req.body.storeId,
-    userId: req.body.userId,
-  });
-
+router.post("/join", async (req, res) => {
   try {
-    await transaction.save();
-    userTier["totalAmount"] += transaction["amount"];
+    const userTier = new UserTierModel(req.body);
     await userTier.save();
-    // const totalAmount = await TotalAmountModel.findOneAndUpdate({storeId: req.body.storeId, userId: req.body.userId}, );
 
     // const logAdd = new ModelLog({
     //   type: "Create",
     //   time: new Date(),
-    //   itemid: transaction._id,
-    //   itemtitle: transaction.title,
+    //   itemid: tier._id,
+    //   itemtitle: tier.title,
     // });
 
     // await logAdd.save();
 
     res.status(200).send();
   } catch (e) {
-    console.log(e);
     res.status(500).send(e);
   }
 });
 
-router.delete("/delete/transaction", async (req, res) => {
+router.delete("/delete/tier", async (req, res) => {
   const id = req.body.id;
   try {
-    const transaction = await TransactionModel.findByIdAndDelete(id);
-    if (!transaction) {
+    const tier = await TierModel.findByIdAndDelete(id);
+    if (!tier) {
       return res.status(404).send();
     }
 

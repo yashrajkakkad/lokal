@@ -10,6 +10,7 @@ const authRouter = require("./src/routes/auth.route");
 const userRouter = require("./src/routes/user.route");
 const storeRouter = require("./src/routes/store.route");
 const tierRouter = require("./src/routes/tier.route");
+const transactionRouter = require("./src/routes/transaction.route");
 // const challengeRouter = require("./src/routes/challenge.routes");
 
 const app = express();
@@ -54,6 +55,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/store", storeRouter);
 app.use("/api/store/tier", tierRouter);
+app.use("/api/store/transaction", transactionRouter);
+
 // app.use("/api", authMiddleware, challengeRouter);
 
 // set port, listen for requests

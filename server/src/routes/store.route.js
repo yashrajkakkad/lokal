@@ -1,6 +1,7 @@
 const express = require("express");
 const StoreModel = require("../models/store.model");
 const TierModel = require("../models/tier.model");
+const UserTierModel = require("../models/userTier.model");
 // const ModelLog = require("../models/log");
 
 const router = express.Router();
@@ -56,6 +57,26 @@ router.put("/update/store", async (req, res) => {
   }
 });
 
+router.post("/join", async (req, res) => {
+  try {
+    const userTier = new UserTierModel(req.body);
+    await userTier.save();
+
+    // const logAdd = new ModelLog({
+    //   type: "Create",
+    //   time: new Date(),
+    //   itemid: tier._id,
+    //   itemtitle: tier.title,
+    // });
+
+    // await logAdd.save();
+
+    res.status(200).send();
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 async function createTiers(tiers) {
   const promises = tiers.map(async (tier) => {
     const newTier = new TierModel(tier);
@@ -68,8 +89,27 @@ async function createTiers(tiers) {
 
 router.post("/create", async (req, res) => {
   try {
-    const tiers = req.body.storeTiers;
+    let tiers = [
+      {
+        name: "Public",
+        description: `You get public access to the ${req.body.name} store`,
+        level: 0,
+        minValue: 0,
+        maxValue: 0,
+      },
+    ];
+    console.log(" -- intial tier --");
+    console.log(tiers);
+    // tiers.push();
+    req.body.storeTiers.map((storeTier) => {
+      tiers.push(storeTier);
+    });
+    tiers.push();
+    console.log(" -- intial but updated tier --");
+    console.log(tiers);
     const storeTiers = await createTiers(tiers);
+    console.log(" -- created tiers --");
+    console.log(storeTiers);
 
     const store = new StoreModel({ tiers: storeTiers, ...req.body });
 
