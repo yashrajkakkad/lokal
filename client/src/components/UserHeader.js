@@ -21,7 +21,7 @@ const styles = (theme) => ({
   },
 });
 
-const StoreHeader = (props) => {
+const UserHeader = (props) => {
   const { classes } = props;
 
   return (
@@ -63,4 +63,4 @@ const StoreHeader = (props) => {
   );
 };
 
-export default withStyles(styles)(StoreHeader);
+export default withStyles(styles)(UserHeader);
