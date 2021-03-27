@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import { Avatar, Card } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-
+import React, { useState } from "react";
+import logo from "../assets/userLogo.jpg";
+import CircularProgressBar from "../components/CircularProgressBar";
 import StoreHeader from "../components/StoreHeader";
-import { Card, LinearProgress } from "@material-ui/core";
+
+const shop = [
+    { title: "Demo Shop" },
+];
 
 const transactions = [
     { amount: 1000, date: "13/03/2021" },
@@ -33,6 +38,9 @@ const styles = (theme) => ({
         marginBottom: 20,
         padding: 10,
     },
+    avatar: {
+        marginRight: "8px",
+    }
 });
 
 const UserShop = (props) => {
@@ -51,8 +59,22 @@ const UserShop = (props) => {
 
     return (
         <div className={classes.screen}>
-            <StoreHeader>Demo Shop</StoreHeader>
+            <StoreHeader>
+                <Avatar className={classes.avatar}>
+                    <img
+                        alt={shop.title}
+                        src={logo}
+                        style={{
+                            height: 48,
+                            width: 48
+                        }}
+                    />
+                </Avatar>
+                Demo Shop
+            </StoreHeader>
             <div className={classes.container}>
+                {/* <LinearProgress variant="determinate" value={80} /> */}
+                <CircularProgressBar />
                 <div
                     className={classes.levelIndicator}
                     onClick={handleExpandedA}
@@ -67,7 +89,6 @@ const UserShop = (props) => {
                 {expandedA ? (
                     <Card className={classes.descCard}>Desc 1</Card>
                 ) : null}
-                <LinearProgress variant="determinate" value={80} />
                 <div
                     className={classes.levelIndicator}
                     onClick={handleExpandedB}
