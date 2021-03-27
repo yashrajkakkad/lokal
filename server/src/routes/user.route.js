@@ -95,4 +95,13 @@ router.delete("/users/me", auth, async (req, res) => {
   }
 });
 
+router.get("/users/all", async (req, res) => {
+  try {
+    const users = await UserModel.find({});
+    return res.send(users);
+  } catch(e) {
+    console.log('Problem che bhai');
+    res.status(500).send();
+  }
+});
 module.exports = router;
