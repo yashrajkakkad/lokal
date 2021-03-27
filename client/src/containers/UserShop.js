@@ -1,6 +1,6 @@
 import {
     AppBar,
-    Avatar,
+
     Box,
     Tab,
     Tabs,
@@ -28,6 +28,16 @@ const styles = (theme) => ({
         width: "100%",
         overflow: "auto",
         backgroundColor: "white",
+    },
+    logoContainer: {
+        textAlign: "center",
+    },
+    logo: {
+        margin: 10,
+        height: 100,
+        width: 100,
+        borderRadius: 50,
+        boxShadow: "0 8px 6px -6px black",
     },
     container: {
         width: "100%",
@@ -143,7 +153,10 @@ const UserShop = (props) => {
     return (
         <div className={classes.screen}>
             <StoreHeader>
-                <Avatar className={classes.avatar}>
+                <div className={classes.logoContainer}>
+                    <img src={logo} alt="logo" className={classes.logo} />
+                </div>
+                {/* <Avatar className={classes.avatar}>
                     <img
                         alt={shop.title}
                         src={logo}
@@ -152,7 +165,7 @@ const UserShop = (props) => {
                             width: 48,
                         }}
                     />
-                </Avatar>
+                </Avatar> */}
                 Demo Shop
             </StoreHeader>
             <AppBar position="static" color="default">

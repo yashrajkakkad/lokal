@@ -3,7 +3,7 @@ import React from "react";
 
 const styles = (theme) => ({
     screen: {
-        minHeight: 127.2,
+        minHeight: 100,
         width: "100%",
         // backgroundColor: "#FF8552",
         background: "linear-gradient(90deg,#29323c,#485563)",
