@@ -57,7 +57,7 @@ app.use("/api/user", userRouter);
 app.use("/api/store", storeRouter);
 app.use("/api/store/tier", tierRouter);
 app.use("/api/store/transaction", transactionRouter);
-app.use("/api/sendgrid", sendgridRouter);
+// app.use("/api/sendgrid", sendgridRouter);
 // app.use("/api", authMiddleware, challengeRouter);
 
 // set port, listen for requests
