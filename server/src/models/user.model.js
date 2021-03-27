@@ -42,6 +42,10 @@ const UserSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    credit: {
+      type: Number,
+      default: 100,
+    },
     tokens: [
       {
         token: {

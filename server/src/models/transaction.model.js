@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+const transactionType = Object.freeze({
+  CASH: "cash",
+  CARD: "card",
+  CREDIT: "credit",
+});
+
 const TransactionSchema = mongoose.Schema(
   {
     storeId: {
@@ -18,6 +24,10 @@ const TransactionSchema = mongoose.Schema(
     },
     comments: {
       type: String,
+    },
+    type: {
+      type: String,
+      enum: Object.values(transactionType),
     },
   },
   {
