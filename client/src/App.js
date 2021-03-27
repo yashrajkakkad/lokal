@@ -1,8 +1,8 @@
 import {
-    BrowserRouter as Router,
-    Switch,
-    Redirect,
-    Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route,
 } from "react-router-dom";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
@@ -16,6 +16,7 @@ import OwnerShop from "./containers/OwnerShop";
 import OwnerSelectShop from "./containers/OwnerSelectShop";
 import authReducer from "./store/reducers/auth";
 import "./App.css";
+import UserProfile from "./containers/UserProfile";
 
 const rootReducer = combineReducers({
     auth: authReducer,

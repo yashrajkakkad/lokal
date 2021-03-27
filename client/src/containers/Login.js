@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import { Avatar, Button, Card, CircularProgress, Link, TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Card, TextField } from "@material-ui/core";
 import { CircularProgress } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 
 import * as authActions from "../store/actions/auth";
+import { LockOutlined } from "@material-ui/icons";
+import React, { useState } from "react";
 
 const styles = (theme) => ({
     screen: {
@@ -23,6 +25,10 @@ const styles = (theme) => ({
         flexDirection: "column",
         alignItems: "center",
     },
+    avatar: {
+        backgroundColor: "#355EB2",
+        marginBottom: 10,
+    },
     cardTitle: {
         fontSize: 20,
         marginBottom: 20,
@@ -31,13 +37,14 @@ const styles = (theme) => ({
         marginBottom: 20,
     },
     loginButton: {
-        width: "50%",
-        height: 50,
-        borderRadius: 25,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#6ed164",
+        // width: "50%",
+        // height: 50,
+        // borderRadius: 25,
+        // display: "flex",
+        // justifyContent: "center",
+        // alignItems: "center",
+        backgroundColor: "#355EB2",
+        color: "#fafafa"
     },
     switch: {
         marginTop: 20,
@@ -84,7 +91,10 @@ const LoginPage = (props) => {
     return (
         <div className={classes.screen}>
             <Card className={classes.baseCard}>
-                <div className={classes.cardTitle}>LOGIN</div>
+                <Avatar className={classes.avatar}>
+                    <LockOutlined />
+                </Avatar>
+                <div className={classes.cardTitle}>Login</div>
                 <TextField
                     className={classes.marginStyle}
                     label="Username"
@@ -106,22 +116,23 @@ const LoginPage = (props) => {
                 {isLoading ? (
                     <CircularProgress />
                 ) : (
-                    <div
+                    <Button
                         className={classes.loginButton}
+                        variant="contained"
                         onClick={submitHandler}
                     >
                         Login
-                    </div>
+                    </Button>
                 )}
 
-                <div
+                <Link
                     className={classes.switch}
                     onClick={() => {
                         props.history.push("/signup");
                     }}
                 >
-                    Switch to signup
-                </div>
+                    Don't have an account? Sign Up.
+                </Link>
             </Card>
         </div>
     );
