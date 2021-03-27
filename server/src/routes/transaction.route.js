@@ -1,5 +1,6 @@
 const express = require("express");
 const TransactionModel = require("../models/transaction.model");
+const UserTierModel = require("../models/userTier.model");
 const ModelLog = require("../models/log");
 
 const router = express.Router();
@@ -55,10 +56,15 @@ router.put("/update/transaction", async (req, res) => {
   }
 });
 
-router.post("/add/item", async (req, res) => {
+router.post("/add/transaction", async (req, res) => {
   const transaction = new ModelTransaction(req.body);
+  const userTier = await UserTierModel.findOne({storeId : req.body.storeId, userId : req.body.userId});
+  
   try {
     await transaction.save();
+    userTier["totalAmount"] += transaction["amount"];
+    await userTier.save();
+    // const totalAmount = await TotalAmountModel.findOneAndUpdate({storeId: req.body.storeId, userId: req.body.userId}, );
 
     // const logAdd = new ModelLog({
     //   type: "Create",
