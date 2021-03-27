@@ -1,25 +1,20 @@
 import {
+    AppBar,
     Avatar,
-
-
-    Box, Card, CardHeader, Divider, List, ListItem,
-    ListItemAvatar, ListItemText,
-
-
-
-
-    Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel,
-    Tooltip
+    Box,
+    Tab,
+    Tabs,
+    Typography,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import logo from "../assets/userLogo.jpg";
-import CircularProgressBar from "../components/CircularProgressBar";
 import StoreHeader from "../components/StoreHeader";
+import PropTypes from "prop-types";
+import StoreDetails from "../components/StoreDetails"
+import CommunityDetails from "../components/CommunityDetails";
 
-const shop = [
-    { title: "Demo Shop" },
-];
+const shop = [{ title: "Demo Shop" }];
 
 const transactions = [
     { amount: 1000, date: "13/03/2021" },
@@ -69,8 +64,47 @@ const styles = (theme) => ({
     },
 });
 
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        "aria-controls": `simple-tabpanel-${index}`,
+    };
+}
+
 const UserShop = (props) => {
     const { classes } = props;
+
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     // const [expandedA, setExpandedA] = useState(false);
     // const [expandedB, setExpandedB] = useState(false);
@@ -92,137 +126,30 @@ const UserShop = (props) => {
                         src={logo}
                         style={{
                             height: 48,
-                            width: 48
+                            width: 48,
                         }}
                     />
                 </Avatar>
                 Demo Shop
             </StoreHeader>
-            <div className={classes.container}>
-                {/* <LinearProgress variant="determinate" value={80} /> */}
-                <CircularProgressBar />
-                <div className={classes.shopContainer}>
-                    <Card className={classes.shopCard}>
-                        <CardHeader
-                            style={{ padding: "4px", paddingTop: "2px" }}
-                            title="Current tier"
-                        />
-                        <Divider />
-                        <List
-                            style={{ padding: "1px 0px 1px 0px" }}
-                        >
-                            <ListItem
-                                style={{ padding: "6px 4px 6px 4px" }}
-                                onClick={() => {
-                                    props.history.push("/userShop");
-                                }}
-                            >
-                                <ListItemAvatar>
-                                    <img
-                                        alt={shop.title}
-                                        src={logo}
-                                        style={{
-                                            height: 48,
-                                            width: 48
-                                        }}
-                                    />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={"Noob"}
-                                    secondary={`desc`}
-                                />
-                            </ListItem>
-                        </List>
-                    </Card>
-                </div>
-                <div className={classes.shopContainer}>
-                    <Card className={classes.shopCard}>
-                        <CardHeader
-                            style={{ padding: "4px", paddingTop: "2px" }}
-                            title="Next tier"
-                        />
-                        <Divider />
-                        <List
-                            style={{ padding: "1px 0px 1px 0px" }}
-                        >
-                            <ListItem
-                                style={{ padding: "6px 4px 6px 4px" }}
-                                onClick={() => {
-                                    props.history.push("/userShop");
-                                }}
-                            >
-                                <ListItemAvatar>
-                                    <img
-                                        alt={shop.title}
-                                        src={logo}
-                                        style={{
-                                            height: 48,
-                                            width: 48
-                                        }}
-                                    />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={"Amateur"}
-                                    secondary={`desc`}
-                                />
-                            </ListItem>
-                        </List>
-                    </Card>
-                </div>
-                <div className={classes.shopContainer}>
-                    <Card className={classes.transCard}>
-                        <CardHeader title="Recent transactions" />
-                        <Divider />
-                        {/* <PerfectScrollbar> */}
-                        <Box sx={{ minWidth: 800 }}>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>
-                                            Transaction amount
-                            </TableCell>
-                                        <TableCell sortDirection="desc">
-                                            <Tooltip
-                                                enterDelay={300}
-                                                title="Sort"
-                                            >
-                                                <TableSortLabel
-                                                    active
-                                                    direction="desc"
-                                                >
-                                                    Date
-                                </TableSortLabel>
-                                            </Tooltip>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {transactions.map((transaction, key) => (
-                                        <TableRow
-                                            hover
-                                            key={key}
-                                        >
-                                            <TableCell>
-                                                {transaction.amount}
-                                            </TableCell>
-                                            <TableCell>
-                                                {transaction.date}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </Box>
-                        {/* </PerfectScrollbar> */}
-                    </Card>
-                </div>
-                {/* <div>Recent Transactions</div>
-                {transactions.map((txn, key) => (
-                    <div key={key}>
-                        {txn.amount}, {txn.date}
-                    </div>
-                ))} */}
-            </div>
+            <AppBar position="static" color="default">
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    variant="fullWidth"
+                >
+                    <Tab label="Store Details" {...a11yProps(0)} />
+                    <Tab label="Community" {...a11yProps(1)} />
+                </Tabs>
+            </AppBar>
+            <TabPanel value={value} index={0}>
+                <StoreDetails />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                <CommunityDetails />
+            </TabPanel>
         </div>
     );
 };
