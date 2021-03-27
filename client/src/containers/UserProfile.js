@@ -1,17 +1,5 @@
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-
-import StoreHeader from "../components/StoreHeader";
-import {
-  Card,
-  FormControl,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  Select,
-} from "@material-ui/core";
 
 import logo from "../assets/userLogo.jpg";
 import UserHeader from "../components/UserHeader";

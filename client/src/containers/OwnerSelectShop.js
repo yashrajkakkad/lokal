@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
     AppBar,
@@ -15,6 +15,8 @@ import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 
 import logo from "../assets/userLogo.jpg";
+import axios from "axios";
+import config from "../config";
 
 const shops = [
     { title: "Demo Shop" },
@@ -102,8 +104,8 @@ const styles = (theme) => ({
         boxSizing: "border-box",
     },
     txtfield: {
-        marginBottom: 20
-    }
+        marginBottom: 20,
+    },
 });
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -118,6 +120,22 @@ const OwnerSelectShop = (props) => {
     const [hostId, setHostId] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [userData, setUserData] = useState();
+    const [userName, setUserName] = useState("")
+    const [stores, setStores] = useState([]);
+
+    const uid = localStorage.getItem("userId");
+
+    useEffect(() => {
+        const urlProfile = `${config.basrUrl}api/user/${uid}`;
+        function getUser() {
+            axios.get(urlProfile).then((res) => {
+                console.log(res)
+                setUserData(res.data);
+            });
+        }
+        getUser();
+    }, [setUserData]);
 
     const closeHandler = () => {
         setDialogOpen(false);
@@ -127,7 +145,7 @@ const OwnerSelectShop = (props) => {
         <div className={classes.screen}>
             <div className={classes.nameBar}>
                 <img src={logo} alt="logo" className={classes.logo} />
-                <div className={classes.userName}>John Doe</div>
+                <div className={classes.userName}></div>
             </div>
             <div className={classes.shopContainer}>
                 {shops.map((shop, key) => (

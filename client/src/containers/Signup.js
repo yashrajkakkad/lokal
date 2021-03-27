@@ -195,7 +195,7 @@ const SignupPage = (props) => {
             label="Age"
           >
             <MenuItem value="member">Customer</MenuItem>
-            <MenuItem value="owner">Owner</MenuItem>
+            <MenuItem value="host">Host</MenuItem>
           </Select>
         </FormControl>
 
