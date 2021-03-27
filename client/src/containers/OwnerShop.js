@@ -62,14 +62,42 @@ const styles = (theme) => ({
     alignItems: "center",
   },
   buttonContainer: {
+    backgroundImage: "linear-gradient(to right, #434343 0%, black 100%)",
+    borderRadius: 5,
     width: "100%",
     display: "flex",
     justifyContent: "center",
+    boxShadow: "0 8px 6px -6px black",
+    color: "white",
     marginTop: 20,
   },
+  button: {
+    color: "white",
+  },
+  tierContainer: {
+    padding: 20,
+  },
   tierTitle: {
-    margin: 20,
-    backgroundColor: "",
+    marginTop: 15,
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
+    color: "white",
+    background:
+      "linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898",
+    backgroundBlendMode: "multiply,multiply",
+    // margin: 20,
+    padding: 5,
+    // minWidth: "100%",
+  },
+  tierDescription: {
+    padding: 5,
+    backgroundColor: "#DCD9D4",
+    backgroundImage:
+      "linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%)",
+    backgroundBlendMode: "soft-light,screen",
+    boxShadow: "0 8px 6px -6px black",
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
   },
 });
 
@@ -89,7 +117,7 @@ const OwnerShop = (props) => {
       <StoreHeader>Demo Shop</StoreHeader>
       <div className={classes.container}>
         <div className={classes.buttonContainer}>
-          <Button variant="contained" color="primary" onClick={dialogHandler}>
+          <Button className={classes.button} onClick={dialogHandler}>
             Create Transaction
           </Button>
         </div>
@@ -138,12 +166,10 @@ const OwnerShop = (props) => {
         {tiers.map((tier) => {
           return (
             <>
-              <span className={classes.tierTitle}>
+              <div className={classes.tierTitle}>
                 Tier Level {tier.level}: {tier.name}{" "}
-              </span>
-              <br />
-              {tier.description}
-              <hr />
+              </div>
+              <div className={classes.tierDescription}>{tier.description}</div>
             </>
           );
         })}
