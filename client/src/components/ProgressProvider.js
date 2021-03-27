@@ -1,14 +1,39 @@
 import React from "react";
 
-// If you don't have a version of React that supports
-// hooks, you can use a class-based version of this
-// component in ProgressProviderUsingClass.js
-const ProgressProvider = ({ valueStart, valueEnd, children }) => {
-    const [value, setValue] = React.useState(valueStart);
-    React.useEffect(() => {
-        setValue(valueEnd);
-    }, [valueEnd]);
+class ProgressProvider extends React.Component {
+    timeout = undefined;
 
-    return children(value);
-};
+    state = {
+        value: this.props.valueStart
+    };
+
+    static defaultProps = {
+        valueStart: 0
+    };
+
+    componentDidMount() {
+        this.timeout = window.setTimeout(() => {
+            this.setState({
+                value: this.props.valueEnd
+            });
+        }, 0);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.valueEnd !== this.props.valueEnd) {
+            this.setState({
+                value: this.props.valueEnd
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        window.clearTimeout(this.timeout);
+    }
+
+    render() {
+        return this.props.children(this.state.value);
+    }
+}
+
 export default ProgressProvider;
