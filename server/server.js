@@ -11,7 +11,7 @@ const userRouter = require("./src/routes/user.route");
 const storeRouter = require("./src/routes/store.route");
 const tierRouter = require("./src/routes/tier.route");
 const transactionRouter = require("./src/routes/transaction.route");
-const sendgridRouter = require("./src/routes/sendgrid");
+// const sendgridRouter = require("./src/routes/sendgrid");
 // const challengeRouter = require("./src/routes/challenge.routes");
 
 const app = express();
