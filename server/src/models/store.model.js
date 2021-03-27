@@ -33,6 +33,15 @@ const StoreSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    // postIds: [
+    //   {
+    //     postId: {
+    //       type: Number,
+    //       required: true,  
+    //       ref: "Post",
+    //     },
+    //   },
+    // ],
   },
   {
     timestamps: {

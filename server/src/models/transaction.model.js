@@ -6,6 +6,11 @@ const transactionType = Object.freeze({
   CREDIT: "credit",
 });
 
+const transactionStatusType = Object.freeze({
+  FAILED: "failed",
+  SUCCEEDEED: "succeeded",
+});
+
 const TransactionSchema = mongoose.Schema(
   {
     storeId: {
@@ -28,6 +33,10 @@ const TransactionSchema = mongoose.Schema(
     type: {
       type: String,
       enum: Object.values(transactionType),
+    },
+    status: {
+      type: String,
+      enum: Object.values(transactionStatusType),
     },
   },
   {

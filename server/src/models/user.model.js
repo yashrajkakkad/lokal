@@ -54,7 +54,7 @@ const UserSchema = mongoose.Schema(
         },
       },
     ],
-  },
+  }, // credit, ownedStoreIds - default NULL
   {
     timestamps: {
       createdAt: "created_at",
