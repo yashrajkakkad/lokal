@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Card } from "@material-ui/core";
+import {
+    Button,
+    Card,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    TextField,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 import logo from "../assets/userLogo.jpg";
@@ -20,13 +27,14 @@ const styles = (theme) => ({
         backgroundColor: "#bac9fe",
     },
     nameBar: {
-        height: 100,
+        height: 140,
         width: "100%",
         // backgroundColor: "black",
         padding: "10px 20px",
         display: "flex",
         alignItems: "center",
         marginBottom: 20,
+        boxSizing: "border-box",
     },
     logo: {
         height: 100,
@@ -60,10 +68,30 @@ const styles = (theme) => ({
         justifyContent: "center",
         alignItems: "center",
     },
+    dialogBox: {
+        padding: 10,
+        // justifyContent: "center",
+        // display: "flex"
+    },
+    dialogText: {
+        width: "calc(100% - 40px)",
+    },
+    textContainer: {
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+    },
 });
 
 const SelectShop = (props) => {
     const { classes } = props;
+
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [storeId, setStoreId] = useState("");
+
+    const closeHandler = () => {
+        setDialogOpen(false);
+    };
 
     return (
         <div className={classes.screen}>
@@ -78,9 +106,44 @@ const SelectShop = (props) => {
                     </Card>
                 ))}
             </div>
-            <div className={classes.newButton}>
+            <div
+                className={classes.newButton}
+                onClick={() => {
+                    setDialogOpen(true);
+                }}
+            >
                 <AddIcon style={{ color: "white", fontSize: 35 }} />
             </div>
+
+            <Dialog
+                className={classes.dialogBox}
+                onClose={closeHandler}
+                open={dialogOpen}
+                fullWidth
+            >
+                <DialogTitle className={classes.dialogTitle}>
+                    Enter Store ID
+                </DialogTitle>
+                <div className={classes.textContainer}>
+                    <TextField
+                        className={classes.dialogText}
+                        variant="outlined"
+                        placeholder="Store ID"
+                        value={storeId}
+                        onChange={(e) => {
+                            setStoreId(e.target.value);
+                        }}
+                    />
+                </div>
+                <DialogActions>
+                    <Button onClick={closeHandler} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={closeHandler} color="primary">
+                        Enter
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
