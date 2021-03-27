@@ -2,18 +2,16 @@ const mongoose = require("mongoose");
 
 const TierSchema = mongoose.Schema(
   {
-    storeId: {
-      type: String,
-      required: true,
-      ref: "Store",
-    },
     name: {
       type: String,
       required: true,
     },
+    level: {
+      type: Number,
+      required: true,
+    },
     description: {
       type: String,
-      default: 0,
     },
     minValue: {
       type: Number,

@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const crypto = require("crypto-js");
+const jwt = require("jsonwebtoken");
+const config = require("../configs/auth.config");
 const { UserTypeEnum } = require("../enums/user.enum");
 
 const userType = Object.freeze({
@@ -38,6 +41,14 @@ const UserSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: {
@@ -50,16 +61,18 @@ const UserSchema = mongoose.Schema(
 UserSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 
+  console.log(user);
   if (!user) {
-    throw new Error("Unable to login");
+    throw new Error("No user found");
   }
 
   decryptedPassword = crypto.AES.decrypt(user.password, config.secret).toString(
     crypto.enc.Utf8
   );
+  console.log(decryptedPassword);
 
   if (decryptedPassword != password) {
-    throw new Error("Unable to login");
+    throw new Error("Password did not match");
   }
 
   return user;

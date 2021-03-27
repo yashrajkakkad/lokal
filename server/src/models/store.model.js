@@ -16,15 +16,15 @@ const StoreSchema = mongoose.Schema(
     description: {
       type: String,
     },
-    tiers: [ {
-      id : {
-        type: String,
-        ref: "Tier",
+    tiers: [
+      {
+        id: {
+          type: String,
+        },
+        level: {
+          type: Number,
+        },
       },
-      number : {
-        type: Number,
-      },
-    },
     ],
     cityName: {
       type: String,

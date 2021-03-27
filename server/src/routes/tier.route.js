@@ -1,6 +1,6 @@
 const express = require("express");
 const TierModel = require("../models/tier.model");
-const ModelLog = require("../models/log");
+// const ModelLog = require("../models/log");
 
 const router = express.Router();
 
@@ -55,7 +55,7 @@ router.put("/update/tier", async (req, res) => {
   }
 });
 
-router.post("/add/item", async (req, res) => {
+router.post("/create", async (req, res) => {
   const tier = new ModelTier(req.body);
   try {
     await tier.save();

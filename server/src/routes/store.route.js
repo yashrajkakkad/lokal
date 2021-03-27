@@ -1,6 +1,7 @@
 const express = require("express");
 const StoreModel = require("../models/store.model");
-const ModelLog = require("../models/log");
+const TierModel = require("../models/tier.model");
+// const ModelLog = require("../models/log");
 
 const router = express.Router();
 
@@ -55,10 +56,24 @@ router.put("/update/store", async (req, res) => {
   }
 });
 
-router.post("/add/item", async (req, res) => {
-  const store = new ModelStore(req.body);
+async function createTiers(tiers) {
+  const promises = tiers.map(async (tier) => {
+    const newTier = new TierModel(tier);
+    await newTier.save();
+
+    return newTier;
+  });
+  return Promise.all(promises);
+}
+
+router.post("/create", async (req, res) => {
   try {
-    await store.save();
+    const tiers = req.body.storeTiers;
+    const storeTiers = await createTiers(tiers);
+
+    const store = new StoreModel({ tiers: storeTiers, ...req.body });
+
+    const newStore = await store.save();
 
     // const logAdd = new ModelLog({
     //   type: "Create",
@@ -71,6 +86,7 @@ router.post("/add/item", async (req, res) => {
 
     res.status(200).send();
   } catch (e) {
+    console.log(e);
     res.status(500).send();
   }
 });
