@@ -101,7 +101,13 @@ const SelectShop = (props) => {
             </div>
             <div className={classes.shopContainer}>
                 {shops.map((shop, key) => (
-                    <Card key={key} className={classes.shopCard}>
+                    <Card
+                        key={key}
+                        className={classes.shopCard}
+                        onClick={() => {
+                            props.history.push("/userShop");
+                        }}
+                    >
                         {shop.title}
                     </Card>
                 ))}
