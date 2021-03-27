@@ -1,29 +1,22 @@
 import {
-    AppBar,
-    Avatar,
-    Box,
-    Card,
-    CardHeader,
-    Divider,
-    List,
     ListItem,
     ListItemAvatar,
     ListItemText,
-    Tab,
+
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
     TableSortLabel,
-    Tabs,
+
     Tooltip,
-    Typography,
+    Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import logo from "../assets/userLogo.jpg";
-import CircularProgressBar from "./CircularProgressBar";
+import CircularProgressBar from "../components/CircularProgressBar";
 
 const shop = [{ title: "Demo Shop" }];
 
@@ -38,11 +31,11 @@ const styles = (theme) => ({
         height: "100vh",
         width: "100%",
         overflow: "auto",
-        backgroundColor: "#bac9fe",
+        backgroundColor: "white",
     },
     container: {
         width: "100%",
-        // padding: "0px 20px",
+        padding: "0px 20px",
         boxSizing: "border-box",
     },
     levelIndicator: {
@@ -60,7 +53,7 @@ const styles = (theme) => ({
     shopCard: {
         width: "90%",
         marginTop: 10,
-        padding: "10px 10px",
+        // padding: "10px 10px",
     },
     transCard: {
         width: "90%",
@@ -73,6 +66,31 @@ const styles = (theme) => ({
         flexDirection: "column",
         alignItems: "center",
     },
+    fieldKey: {
+        width: "100%",
+        marginTop: 15,
+        padding: 5,
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
+        color: "white",
+        background:
+            "linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898",
+        backgroundBlendMode: "multiply,multiply",
+    },
+    fieldValue: {
+        width: "100%",
+        padding: 5,
+        backgroundColor: "#DCD9D4",
+        backgroundImage:
+            "linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%)",
+        backgroundBlendMode: "soft-light,screen",
+        boxShadow: "0 8px 6px -6px black",
+        borderBottomRightRadius: 5,
+        borderBottomLeftRadius: 5,
+    },
+    tableCell: {
+        padding: "4px",
+    }
 });
 
 const StoreDetails = (props) => {
@@ -80,114 +98,107 @@ const StoreDetails = (props) => {
 
     return (
         <div className={classes.container}>
-            {/* <LinearProgress variant="determinate" value={80} /> */}
             <CircularProgressBar />
-            <div className={classes.shopContainer}>
-                <Card className={classes.shopCard}>
-                    <CardHeader
-                        style={{ padding: "4px", paddingTop: "2px" }}
-                        title="Current tier"
-                    />
-                    <Divider />
-                    <List style={{ padding: "1px 0px 1px 0px" }}>
-                        <ListItem
-                            style={{ padding: "6px 4px 6px 4px" }}
-                            onClick={() => {
-                                props.history.push("/userShop");
+            <div className={classes.fieldKey}>
+                <Typography variant="h5">Current tier</Typography>
+            </div>
+            <div className={classes.fieldValue}>
+                <ListItem
+                    className={classes.listItem}
+                    style={{ padding: "6px 4px 6px 4px" }}
+                    onClick={() => {
+                        props.history.push("/userShop");
+                    }}
+                >
+                    <ListItemAvatar>
+                        <img
+                            alt={shop.title}
+                            src={logo}
+                            style={{
+                                height: 48,
+                                width: 48
                             }}
-                        >
-                            <ListItemAvatar>
-                                <img
-                                    alt={shop.title}
-                                    src={logo}
-                                    style={{
-                                        height: 48,
-                                        width: 48,
-                                    }}
-                                />
-                            </ListItemAvatar>
-                            <ListItemText primary={"Noob"} secondary={`desc`} />
-                        </ListItem>
-                    </List>
-                </Card>
-            </div>
-            <div className={classes.shopContainer}>
-                <Card className={classes.shopCard}>
-                    <CardHeader
-                        style={{ padding: "4px", paddingTop: "2px" }}
-                        title="Next tier"
+                        />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={"Noob"}
+                        secondary={`desc`}
                     />
-                    <Divider />
-                    <List style={{ padding: "1px 0px 1px 0px" }}>
-                        <ListItem
-                            style={{ padding: "6px 4px 6px 4px" }}
-                            onClick={() => {
-                                props.history.push("/userShop");
+                </ListItem>
+            </div>
+            <div className={classes.fieldKey}>
+                <Typography variant="h5">Next tier</Typography>
+            </div>
+            <div className={classes.fieldValue}>
+                <ListItem
+                    className={classes.listItem}
+                    style={{ padding: "6px 4px 6px 4px" }}
+                    onClick={() => {
+                        props.history.push("/userShop");
+                    }}
+                >
+                    <ListItemAvatar>
+                        <img
+                            alt={shop.title}
+                            src={logo}
+                            style={{
+                                height: 48,
+                                width: 48
                             }}
-                        >
-                            <ListItemAvatar>
-                                <img
-                                    alt={shop.title}
-                                    src={logo}
-                                    style={{
-                                        height: 48,
-                                        width: 48,
-                                    }}
-                                />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={"Amateur"}
-                                secondary={`desc`}
-                            />
-                        </ListItem>
-                    </List>
-                </Card>
+                        />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={"Amateur"}
+                        secondary={`desc`}
+                    />
+                </ListItem>
             </div>
-            <div className={classes.shopContainer}>
-                <Card className={classes.transCard}>
-                    <CardHeader title="Recent transactions" />
-                    <Divider />
-                    {/* <PerfectScrollbar> */}
-                    <Box sx={{ minWidth: 800 }}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Transaction amount</TableCell>
-                                    <TableCell sortDirection="desc">
-                                        <Tooltip enterDelay={300} title="Sort">
-                                            <TableSortLabel
-                                                active
-                                                direction="desc"
-                                            >
-                                                Date
-                                            </TableSortLabel>
-                                        </Tooltip>
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {transactions.map((transaction, key) => (
-                                    <TableRow hover key={key}>
-                                        <TableCell>
-                                            {transaction.amount}
-                                        </TableCell>
-                                        <TableCell>
-                                            {transaction.date}
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </Box>
-                    {/* </PerfectScrollbar> */}
-                </Card>
+            <div className={classes.fieldKey}>
+                <Typography variant="h5">Recent transactions</Typography>
             </div>
-            {/* <div>Recent Transactions</div>
-                {transactions.map((txn, key) => (
-                    <div key={key}>
-                        {txn.amount}, {txn.date}
-                    </div>
-                ))} */}
+            <div className={classes.fieldValue}>
+                {/* <Box sx={{ minWidth: 800 }}> */}
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell className={classes.tableCell}>
+                                Transaction amount
+                            </TableCell>
+                            <TableCell
+                                className={classes.tableCell}
+                                sortDirection="desc">
+                                <Tooltip
+                                    enterDelay={300}
+                                    title="Sort"
+                                >
+                                    <TableSortLabel
+                                        active
+                                        direction="desc"
+                                    >
+                                        Date
+                                </TableSortLabel>
+                                </Tooltip>
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {transactions.map((transaction, key) => (
+                            <TableRow
+                                hover
+                                key={key}
+                            >
+                                <TableCell className={classes.tableCell}>
+                                    {transaction.amount}
+                                </TableCell>
+                                <TableCell className={classes.tableCell}>
+                                    {transaction.date}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                {/* </Box> */}
+            </div>
         </div>
     );
 };

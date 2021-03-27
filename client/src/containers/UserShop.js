@@ -2,24 +2,14 @@ import {
     AppBar,
     Avatar,
     Box,
-
-
-
-    ListItem, ListItemAvatar, ListItemText, Tab,
-
-
-
-    Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel, Tabs,
-
-
-
-    Tooltip, Typography
+    Tab,
+    Tabs,
+    Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React from "react";
 import logo from "../assets/userLogo.jpg";
-import CircularProgressBar from "../components/CircularProgressBar";
 import CommunityDetails from "../components/CommunityDetails";
 import StoreDetails from "../components/StoreDetails";
 import StoreHeader from "../components/StoreHeader";
@@ -183,109 +173,6 @@ const UserShop = (props) => {
             <TabPanel value={value} index={1}>
                 <CommunityDetails />
             </TabPanel>
-            <CircularProgressBar />
-            <div className={classes.container}>
-                <div className={classes.fieldKey}>
-                    <Typography variant="h5">Current tier</Typography>
-                </div>
-                <div className={classes.fieldValue}>
-                    <ListItem
-                        className={classes.listItem}
-                        style={{ padding: "6px 4px 6px 4px" }}
-                        onClick={() => {
-                            props.history.push("/userShop");
-                        }}
-                    >
-                        <ListItemAvatar>
-                            <img
-                                alt={shop.title}
-                                src={logo}
-                                style={{
-                                    height: 48,
-                                    width: 48
-                                }}
-                            />
-                        </ListItemAvatar>
-                        <ListItemText
-                            primary={"Noob"}
-                            secondary={`desc`}
-                        />
-                    </ListItem>
-                </div>
-                <div className={classes.fieldKey}>
-                    <Typography variant="h5">Next tier</Typography>
-                </div>
-                <div className={classes.fieldValue}>
-                    <ListItem
-                        className={classes.listItem}
-                        style={{ padding: "6px 4px 6px 4px" }}
-                        onClick={() => {
-                            props.history.push("/userShop");
-                        }}
-                    >
-                        <ListItemAvatar>
-                            <img
-                                alt={shop.title}
-                                src={logo}
-                                style={{
-                                    height: 48,
-                                    width: 48
-                                }}
-                            />
-                        </ListItemAvatar>
-                        <ListItemText
-                            primary={"Amateur"}
-                            secondary={`desc`}
-                        />
-                    </ListItem>
-                </div>
-                <div className={classes.fieldKey}>
-                    <Typography variant="h5">Recent transactions</Typography>
-                </div>
-                <div className={classes.fieldValue}>
-                    {/* <Box sx={{ minWidth: 800 }}> */}
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell className={classes.tableCell}>
-                                    Transaction amount
-                            </TableCell>
-                                <TableCell
-                                    className={classes.tableCell}
-                                    sortDirection="desc">
-                                    <Tooltip
-                                        enterDelay={300}
-                                        title="Sort"
-                                    >
-                                        <TableSortLabel
-                                            active
-                                            direction="desc"
-                                        >
-                                            Date
-                                </TableSortLabel>
-                                    </Tooltip>
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {transactions.map((transaction, key) => (
-                                <TableRow
-                                    hover
-                                    key={key}
-                                >
-                                    <TableCell className={classes.tableCell}>
-                                        {transaction.amount}
-                                    </TableCell>
-                                    <TableCell className={classes.tableCell}>
-                                        {transaction.date}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                    {/* </Box> */}
-                </div>
-            </div>
         </div>
     );
 };
