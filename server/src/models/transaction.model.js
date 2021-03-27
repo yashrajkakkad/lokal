@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 
+const transactionType = Object.freeze({
+  CASH: "cash",
+  CARD: "card",
+  CREDIT: "credit",
+});
+
+const transactionStatusType = Object.freeze({
+  FAILED: "failed",
+  SUCCEEDEED: "succeeded",
+});
+
 const TransactionSchema = mongoose.Schema(
   {
     storeId: {
@@ -18,7 +29,15 @@ const TransactionSchema = mongoose.Schema(
     },
     comments: {
       type: String,
-    }, // status
+    },
+    type: {
+      type: String,
+      enum: Object.values(transactionType),
+    },
+    status: {
+      type: String,
+      enum: Object.values(transactionStatusType),
+    },
   },
   {
     timestamps: {
