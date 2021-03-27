@@ -20,7 +20,7 @@ const styles = (theme) => ({
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
-        backgroundColor: "#bac9fe",
+        backgroundColor: "white"
     },
     baseCard: {
         width: "80%",
@@ -29,9 +29,16 @@ const styles = (theme) => ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        backgroundColor: "#DCD9D4",
+        backgroundImage:
+            "linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%)",
+        backgroundBlendMode: "soft-light,screen",
+        boxShadow: "0 8px 6px -6px black",
+        borderBottomRightRadius: 5,
+        borderBottomLeftRadius: 5,
     },
     avatar: {
-        backgroundColor: "#355EB2",
+        backgroundColor: "#424E5B",
         marginBottom: 10,
     },
     cardTitle: {
@@ -48,10 +55,11 @@ const styles = (theme) => ({
         // display: "flex",
         // justifyContent: "center",
         // alignItems: "center",
-        backgroundColor: "#355EB2",
+        backgroundColor: "#424E5B",
         color: "#fafafa",
     },
     switch: {
+        color: "#424E5B",
         marginTop: 20,
     },
 });
