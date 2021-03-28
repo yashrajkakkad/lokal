@@ -11,10 +11,12 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import logo from "../assets/userLogo.jpg";
 import UserHeader from "../components/UserHeader";
+import config from "../config";
 
 
 const shops = [
@@ -113,6 +115,10 @@ const styles = (theme) => ({
         borderBottomRightRadius: 5,
         borderBottomLeftRadius: 5,
     },
+    userName: {
+        marginLeft: 20,
+        fontSize: 30,
+    },
 });
 
 const SelectShop = (props) => {
@@ -123,9 +129,40 @@ const SelectShop = (props) => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [storeId, setStoreId] = useState("");
+    const [stores, setStores] = useState([]);
+
+    const uid = localStorage.getItem("userId");
+
+    useEffect(() => {
+        const url = `${config.basrUrl}api/store/allStores/${uid}`;
+        function getStores() {
+            axios
+                .get(url)
+                .then((res) => {
+                    console.log(res.data)
+                    setStores(res.data);
+                })
+                .catch((err) => {
+                    setStores([]);
+                });
+        }
+        getStores();
+    }, [setStores]);
 
     const closeHandler = () => {
         setDialogOpen(false);
+    };
+
+    const joinStoreHandler = () => {
+        const data = {
+            storeId: storeId,
+            userId: uid,
+        };
+        const url = `${config.basrUrl}api/store/join`;
+        axios.post(url, data).then((res) => {
+            console.log(res);
+            window.location.reload();
+        });
     };
 
     console.log(fName, lName);
@@ -136,19 +173,22 @@ const SelectShop = (props) => {
                 <div className={classes.logoContainer}>
                     <img src={logo} alt="logo" className={classes.logo} />
                 </div>
+                <div className={classes.userName}>
+                    {fName} {lName}
+                </div>
             </UserHeader>
             <div className={classes.shopContainer}>
                 <div className={classes.fieldKey}>
                     <Typography variant="h5">Available shops</Typography>
                 </div>
                 <div className={classes.fieldValue}>
-                    {shops.map((shop, key) => (
+                    {stores.map((shop, key) => (
                         <ListItem
                             style={{ padding: "6px 4px 6px 4px" }}
-                            divider={key < shops.length - 1}
+                            divider={key < stores.length - 1}
                             key={key}
                             onClick={() => {
-                                props.history.push("/userShop");
+                                props.history.push(`/userShop/${shop._id}`);
                             }}
                         >
                             <ListItemAvatar>
@@ -161,7 +201,7 @@ const SelectShop = (props) => {
                                     }}
                                 />
                             </ListItemAvatar>
-                            <ListItemText primary={shop.title} secondary={`subtitle`} />
+                            <ListItemText primary={shop.name} secondary={`subtitle`} />
                         </ListItem>
                     ))}
                 </div>
@@ -198,7 +238,7 @@ const SelectShop = (props) => {
                     <Button onClick={closeHandler} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={closeHandler} color="primary">
+                    <Button onClick={joinStoreHandler} color="primary">
                         Enter
                     </Button>
                 </DialogActions>
