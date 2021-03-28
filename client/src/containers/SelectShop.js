@@ -170,7 +170,12 @@ const SelectShop = (props) => {
     return (
         <div className={classes.screen}>
             <UserHeader>
-                <div className={classes.logoContainer}>
+                <div
+                    className={classes.logoContainer}
+                    onClick={() => {
+                        props.history.push("/userProfile");
+                    }}
+                >
                     <img src={logo} alt="logo" className={classes.logo} />
                 </div>
                 <div className={classes.userName}>{userName}</div>

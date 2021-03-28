@@ -10,7 +10,7 @@ const CircularProgressBar = (props) => {
         <div style={{ marginBottom: 10 }}>
             <div style={{ marginTop: 10, display: "flex", justifyContent: "center" }}>
                 <div style={{ width: "60%" }}>
-                    <ProgressProvider valueStart={0} valueEnd={valueEnd}>
+                    <ProgressProvider valueStart={0} valueEnd={props.currValue}>
                         {value => <CircularProgressbar
                             value={value}
                             text={`${value}%`}

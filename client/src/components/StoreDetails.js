@@ -108,15 +108,20 @@ const StoreDetails = (props) => {
             const url = `${config.basrUrl}api/user/tier/${uid}/${storeId}`;
             axios.get(url).then((res) => {
                 console.log(res);
+                setStoreData(res.data);
             });
         }
         getStore();
-    });
+    }, [setStoreData]);
 
     if (storeData) {
         return (
             <div className={classes.container}>
-                <CircularProgressBar />
+                <CircularProgressBar
+                    currValue={
+                        storeData.percentage ? storeData.percentage : 100
+                    }
+                />
                 <div className={classes.fieldKey}>
                     <Typography variant="h5">Current tier</Typography>
                 </div>
@@ -138,7 +143,7 @@ const StoreDetails = (props) => {
                                 }}
                             />
                         </ListItemAvatar>
-                        <ListItemText primary={"Noob"} secondary={`desc`} />
+                        <ListItemText primary={storeData.curTier.name} secondary={`desc`} />
                     </ListItem>
                 </div>
                 <div className={classes.fieldKey}>
@@ -162,7 +167,7 @@ const StoreDetails = (props) => {
                                 }}
                             />
                         </ListItemAvatar>
-                        <ListItemText primary={"Amateur"} secondary={`desc`} />
+                        <ListItemText primary={storeData.nextTier.name} secondary={`desc`} />
                     </ListItem>
                 </div>
                 <div className={classes.fieldKey}>
@@ -189,7 +194,7 @@ const StoreDetails = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {transactions.map((transaction, key) => (
+                            {storeData.transactions.map((transaction, key) => (
                                 <TableRow hover key={key}>
                                     <TableCell className={classes.tableCell}>
                                         {transaction.amount}
