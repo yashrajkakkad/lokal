@@ -115,10 +115,6 @@ const styles = (theme) => ({
         borderBottomRightRadius: 5,
         borderBottomLeftRadius: 5,
     },
-    userName: {
-        marginLeft: 20,
-        fontSize: 30,
-    },
 });
 
 const SelectShop = (props) => {
