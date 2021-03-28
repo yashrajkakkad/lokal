@@ -1,22 +1,23 @@
+import React, { useEffect, useState } from "react";
 import {
     ListItem,
     ListItemAvatar,
     ListItemText,
-
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
     TableSortLabel,
-
     Tooltip,
-    Typography
+    Typography,
+    CircularProgress,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import React from "react";
 import logo from "../assets/userLogo.jpg";
 import CircularProgressBar from "../components/CircularProgressBar";
+import axios from "axios";
+import config from "../config";
 
 const shop = [{ title: "Demo Shop" }];
 
@@ -90,117 +91,135 @@ const styles = (theme) => ({
     },
     tableCell: {
         padding: "4px",
-    }
+    },
 });
 
 const StoreDetails = (props) => {
     const { classes } = props;
 
-    return (
-        <div className={classes.container}>
-            <CircularProgressBar />
-            <div className={classes.fieldKey}>
-                <Typography variant="h5">Current tier</Typography>
-            </div>
-            <div className={classes.fieldValue}>
-                <ListItem
-                    className={classes.listItem}
-                    style={{ padding: "6px 4px 6px 4px" }}
-                // onClick={() => {
-                //     props.history.push("/userShop");
-                // }}
-                >
-                    <ListItemAvatar>
-                        <img
-                            alt={shop.title}
-                            src={logo}
-                            style={{
-                                height: 48,
-                                width: 48
-                            }}
-                        />
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={"Noob"}
-                        secondary={`desc`}
-                    />
-                </ListItem>
-            </div>
-            <div className={classes.fieldKey}>
-                <Typography variant="h5">Next tier</Typography>
-            </div>
-            <div className={classes.fieldValue}>
-                <ListItem
-                    className={classes.listItem}
-                    style={{ padding: "6px 4px 6px 4px" }}
-                // onClick={() => {
-                //     props.history.push("/userShop");
-                // }}
-                >
-                    <ListItemAvatar>
-                        <img
-                            alt={shop.title}
-                            src={logo}
-                            style={{
-                                height: 48,
-                                width: 48
-                            }}
-                        />
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={"Amateur"}
-                        secondary={`desc`}
-                    />
-                </ListItem>
-            </div>
-            <div className={classes.fieldKey}>
-                <Typography variant="h5">Recent transactions</Typography>
-            </div>
-            <div className={classes.fieldValue}>
-                {/* <Box sx={{ minWidth: 800 }}> */}
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell className={classes.tableCell}>
-                                Transaction amount
-                            </TableCell>
-                            <TableCell
-                                className={classes.tableCell}
-                                sortDirection="desc">
-                                <Tooltip
-                                    enterDelay={300}
-                                    title="Sort"
-                                >
-                                    <TableSortLabel
-                                        active
-                                        direction="desc"
-                                    >
-                                        Date
-                                </TableSortLabel>
-                                </Tooltip>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {transactions.map((transaction, key) => (
-                            <TableRow
-                                hover
-                                key={key}
-                            >
+    const path = window.location.pathname.split("/");
+    const storeId = path[path.length - 1];
+    const [storeData, setStoreData] = useState();
+
+    const uid = localStorage.getItem("userId");
+
+    useEffect(() => {
+        function getStore() {
+            const url = `${config.basrUrl}api/user/tier/${uid}/${storeId}`;
+            axios.get(url).then((res) => {
+                console.log(res);
+            });
+        }
+        getStore();
+    });
+
+    if (storeData) {
+        return (
+            <div className={classes.container}>
+                <CircularProgressBar />
+                <div className={classes.fieldKey}>
+                    <Typography variant="h5">Current tier</Typography>
+                </div>
+                <div className={classes.fieldValue}>
+                    <ListItem
+                        className={classes.listItem}
+                        style={{ padding: "6px 4px 6px 4px" }}
+                        // onClick={() => {
+                        //     props.history.push("/userShop");
+                        // }}
+                    >
+                        <ListItemAvatar>
+                            <img
+                                alt={shop.title}
+                                src={logo}
+                                style={{
+                                    height: 48,
+                                    width: 48,
+                                }}
+                            />
+                        </ListItemAvatar>
+                        <ListItemText primary={"Noob"} secondary={`desc`} />
+                    </ListItem>
+                </div>
+                <div className={classes.fieldKey}>
+                    <Typography variant="h5">Next tier</Typography>
+                </div>
+                <div className={classes.fieldValue}>
+                    <ListItem
+                        className={classes.listItem}
+                        style={{ padding: "6px 4px 6px 4px" }}
+                        // onClick={() => {
+                        //     props.history.push("/userShop");
+                        // }}
+                    >
+                        <ListItemAvatar>
+                            <img
+                                alt={shop.title}
+                                src={logo}
+                                style={{
+                                    height: 48,
+                                    width: 48,
+                                }}
+                            />
+                        </ListItemAvatar>
+                        <ListItemText primary={"Amateur"} secondary={`desc`} />
+                    </ListItem>
+                </div>
+                <div className={classes.fieldKey}>
+                    <Typography variant="h5">Recent transactions</Typography>
+                </div>
+                <div className={classes.fieldValue}>
+                    {/* <Box sx={{ minWidth: 800 }}> */}
+                    <Table>
+                        <TableHead>
+                            <TableRow>
                                 <TableCell className={classes.tableCell}>
-                                    {transaction.amount}
+                                    Transaction amount
                                 </TableCell>
-                                <TableCell className={classes.tableCell}>
-                                    {transaction.date}
+                                <TableCell
+                                    className={classes.tableCell}
+                                    sortDirection="desc"
+                                >
+                                    <Tooltip enterDelay={300} title="Sort">
+                                        <TableSortLabel active direction="desc">
+                                            Date
+                                        </TableSortLabel>
+                                    </Tooltip>
                                 </TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                {/* </Box> */}
+                        </TableHead>
+                        <TableBody>
+                            {transactions.map((transaction, key) => (
+                                <TableRow hover key={key}>
+                                    <TableCell className={classes.tableCell}>
+                                        {transaction.amount}
+                                    </TableCell>
+                                    <TableCell className={classes.tableCell}>
+                                        {transaction.date}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    {/* </Box> */}
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return (
+            <div
+                style={{
+                    height: "100vh",
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                }}
+            >
+                <CircularProgress />
+            </div>
+        );
+    }
 };
 
 export default withStyles(styles)(StoreDetails);

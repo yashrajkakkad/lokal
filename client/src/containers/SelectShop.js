@@ -130,12 +130,17 @@ const SelectShop = (props) => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [storeId, setStoreId] = useState("");
     const [stores, setStores] = useState([]);
+    const [userName, setUserName] = useState("")
 
     const uid = localStorage.getItem("userId");
 
     useEffect(() => {
         const url = `${config.basrUrl}api/store/allStores/${uid}`;
+        const urlProfile = `${config.basrUrl}api/user/user/${uid}`;
         function getStores() {
+            axios.get(urlProfile).then((res) => {
+                setUserName(res.data.firstName + " " + res.data.lastName);
+            });
             axios
                 .get(url)
                 .then((res) => {
@@ -174,7 +179,7 @@ const SelectShop = (props) => {
                     <img src={logo} alt="logo" className={classes.logo} />
                 </div>
                 <div className={classes.userName}>
-                    {fName} {lName}
+                    {userName}
                 </div>
             </UserHeader>
             <div className={classes.shopContainer}>
