@@ -127,10 +127,10 @@ const OwnerSelectShop = (props) => {
     const uid = localStorage.getItem("userId");
 
     useEffect(() => {
-        const urlProfile = `${config.basrUrl}api/user/${uid}`;
+        const urlProfile = `${config.basrUrl}api/user/user/${uid}`;
         function getUser() {
             axios.get(urlProfile).then((res) => {
-                console.log(res)
+                console.log("Res:", res)
                 setUserData(res.data);
             });
         }
