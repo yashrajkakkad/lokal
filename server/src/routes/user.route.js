@@ -1,5 +1,9 @@
 const express = require("express");
 const UserModel = require("../models/user.model");
+const UserTierModel = require("../models/userTier.model");
+const StoreModel = require("../models/store.model");
+const TransactionModel = require("../models/transaction.model");
+const TierModel = require("../models/tier.model");
 const auth = require("../middlewares/auth");
 
 const router = express.Router();
@@ -113,6 +117,50 @@ router.get("/user/:userId", async (req, res) => {
     return res.send(user);
   } catch(e) {
     console.log('Problem che bhai');
+    res.status(500).send();
+  }
+});
+
+
+router.get("/tier/:userId/:storeId", async (req, res) => {
+  try {
+
+    const userTier = await UserTierModel.findOne({'storeId' : req.params.storeId, 'userId' : req.params.userId});
+    console.log(userTier);
+    const level = userTier["level"];
+    const store = await StoreModel.findById(req.params.storeId);
+    console.log(store);
+    const tiers = store["tiers"];
+    const curTier = await TierModel.findById(tiers[level]._id);
+    let nextTier;
+
+    try{
+      nextTier = await TierModel.findById(tiers[level+1]._id);
+    } catch(e) {
+      nextTier = null;
+    }
+
+    let percentage = (userTier["totalAmount"] - curTier["minValue"]) / (curTier["maxValue"] - curTier["minValue"]) * 100;
+    if(percentage > 100)
+    {
+      percentage = 100;
+    }
+    // console.log(curTier['totalAmount'];)
+    console.log(curTier["minValue"]);
+    console.log(curTier["maxValue"]);
+    console.log(userTier["totalAmount"]);
+    console.log(percentage);
+    const transactions = await TransactionModel.find({'storeId' : req.params.storeId, 'userId' : req.params.userId}).sort({ createdAt: 'desc'}).exec();;
+
+    const result = {
+      percentage : percentage,
+      curTier : curTier,
+      nextTier : nextTier,
+      transactions: transactions,
+    };
+    return res.send(result);
+  } catch (e) {
+    console.log(e);
     res.status(500).send();
   }
 });
