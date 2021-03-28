@@ -121,17 +121,22 @@ const OwnerSelectShop = (props) => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [userData, setUserData] = useState();
-    const [userName, setUserName] = useState("")
+    const [userName, setUserName] = useState("");
     const [stores, setStores] = useState([]);
 
     const uid = localStorage.getItem("userId");
 
     useEffect(() => {
         const urlProfile = `${config.basrUrl}api/user/user/${uid}`;
+        const urlShop = `${config.basrUrl}api/store/allStores/owner/${uid}`;
         function getUser() {
             axios.get(urlProfile).then((res) => {
-                console.log("Res:", res)
                 setUserData(res.data);
+                setUserName(res.data.firstName + " " + res.data.lastName);
+            });
+            axios.get(urlShop).then((res) => {
+                console.log(res.data);
+                setStores(res.data);
             });
         }
         getUser();
@@ -141,22 +146,52 @@ const OwnerSelectShop = (props) => {
         setDialogOpen(false);
     };
 
+    const newStoreHandler = () => {
+        const data = {
+            name: storeName,
+            hostId: uid,
+            emailId: email,
+            phoneNumber: phone,
+            storeTiers: [
+                {
+                    name: "Silver",
+                    description: "You will get access to all the games",
+                    level: 1,
+                    minValue: 1,
+                    maxValue: 10,
+                },
+                {
+                    name: "Gold",
+                    description: "You will get early access to new games",
+                    level: 2,
+                    minValue: 11,
+                    maxValue: 20,
+                },
+            ],
+        };
+        const storeUrl = `${config.basrUrl}api/store/create`;
+        axios.post(storeUrl, data).then((res) => {
+            console.log(res);
+            window.location.reload();
+        });
+    };
+
     return (
         <div className={classes.screen}>
             <div className={classes.nameBar}>
                 <img src={logo} alt="logo" className={classes.logo} />
-                <div className={classes.userName}></div>
+                <div className={classes.userName}>{userName}</div>
             </div>
             <div className={classes.shopContainer}>
-                {shops.map((shop, key) => (
+                {stores.map((shop, key) => (
                     <Card
                         key={key}
                         className={classes.shopCard}
                         onClick={() => {
-                            props.history.push("/ownerShop");
+                            props.history.push(`/ownerShop/${shop._id}`);
                         }}
                     >
-                        {shop.title}
+                        {shop.name}
                     </Card>
                 ))}
             </div>
@@ -187,7 +222,7 @@ const OwnerSelectShop = (props) => {
                         <Typography variant="h6" className={classes.title}>
                             New Store
                         </Typography>
-                        <Button color="inherit" onClick={closeHandler}>
+                        <Button color="inherit" onClick={newStoreHandler}>
                             Save
                         </Button>
                     </Toolbar>
@@ -203,7 +238,7 @@ const OwnerSelectShop = (props) => {
                             setStoreName(e.target.value);
                         }}
                     />
-                    <TextField
+                    {/* <TextField
                         variant="outlined"
                         label="Host ID"
                         fullWidth
@@ -212,7 +247,7 @@ const OwnerSelectShop = (props) => {
                         onChange={(e) => {
                             setHostId(e.target.value);
                         }}
-                    />
+                    /> */}
                     <TextField
                         variant="outlined"
                         label="Email ID"
