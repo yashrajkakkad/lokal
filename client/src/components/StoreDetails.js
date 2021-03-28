@@ -106,9 +106,9 @@ const StoreDetails = (props) => {
                 <ListItem
                     className={classes.listItem}
                     style={{ padding: "6px 4px 6px 4px" }}
-                    onClick={() => {
-                        props.history.push("/userShop");
-                    }}
+                // onClick={() => {
+                //     props.history.push("/userShop");
+                // }}
                 >
                     <ListItemAvatar>
                         <img
@@ -133,9 +133,9 @@ const StoreDetails = (props) => {
                 <ListItem
                     className={classes.listItem}
                     style={{ padding: "6px 4px 6px 4px" }}
-                    onClick={() => {
-                        props.history.push("/userShop");
-                    }}
+                // onClick={() => {
+                //     props.history.push("/userShop");
+                // }}
                 >
                     <ListItemAvatar>
                         <img
