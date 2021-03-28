@@ -10,7 +10,7 @@ router.get("/posts/:storeId", async (req, res) => {
     console.log(storeId);
     const posts = await PostModel.find({ storeId: storeId }).exec();
     console.log(posts);
-    res.status(200).send();
+    res.status(200).send(posts);
     // const store = await StoreModel.findById(req.params.storeId);
     // const postIds = store["postIds"];
     // Find all by Ids
