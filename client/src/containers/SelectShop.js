@@ -7,7 +7,7 @@ import {
     ListItemAvatar,
     ListItemText,
     TextField,
-    Typography
+    Typography,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -17,7 +17,6 @@ import { useSelector } from "react-redux";
 import logo from "../assets/userLogo.jpg";
 import UserHeader from "../components/UserHeader";
 import config from "../config";
-
 
 const shops = [
     { title: "Demo Shop" },
@@ -126,7 +125,7 @@ const SelectShop = (props) => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [storeId, setStoreId] = useState("");
     const [stores, setStores] = useState([]);
-    const [userName, setUserName] = useState("")
+    const [userName, setUserName] = useState("");
 
     const uid = localStorage.getItem("userId");
 
@@ -140,7 +139,7 @@ const SelectShop = (props) => {
             axios
                 .get(url)
                 .then((res) => {
-                    console.log(res.data)
+                    console.log(res.data);
                     setStores(res.data);
                 })
                 .catch((err) => {
@@ -174,9 +173,7 @@ const SelectShop = (props) => {
                 <div className={classes.logoContainer}>
                     <img src={logo} alt="logo" className={classes.logo} />
                 </div>
-                <div className={classes.userName}>
-                    {userName}
-                </div>
+                <div className={classes.userName}>{userName}</div>
             </UserHeader>
             <div className={classes.shopContainer}>
                 <div className={classes.fieldKey}>
@@ -202,7 +199,10 @@ const SelectShop = (props) => {
                                     }}
                                 />
                             </ListItemAvatar>
-                            <ListItemText primary={shop.name} secondary={`subtitle`} />
+                            <ListItemText
+                                primary={shop.name}
+                                secondary={`subtitle`}
+                            />
                         </ListItem>
                     ))}
                 </div>
