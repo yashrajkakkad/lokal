@@ -30,6 +30,17 @@ router.get("/allStores/:userId", async (req, res) => {
   }
 });
 
+router.get("/allStores/owner/:userId", async (req, res) => {
+  try{
+    const userId = req.params.userId;
+    const stores = await StoreModel.find({"hostId" : userId});
+    res.send(stores);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send();
+  }
+});
+
 router.get("/store/:id", async (req, res) => {
   const id = req.params.id;
 

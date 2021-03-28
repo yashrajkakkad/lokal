@@ -1,18 +1,18 @@
 import {
     AppBar,
-    Avatar,
+
     Box,
     Tab,
     Tabs,
-    Typography,
+    Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import React from "react";
 import logo from "../assets/userLogo.jpg";
-import StoreHeader from "../components/StoreHeader";
-import PropTypes from "prop-types";
-import StoreDetails from "../components/StoreDetails"
 import CommunityDetails from "../components/CommunityDetails";
+import StoreDetails from "../components/StoreDetails";
+import StoreHeader from "../components/StoreHeader";
 
 const shop = [{ title: "Demo Shop" }];
 
@@ -27,7 +27,17 @@ const styles = (theme) => ({
         height: "100vh",
         width: "100%",
         overflow: "auto",
-        backgroundColor: "#bac9fe",
+        backgroundColor: "white",
+    },
+    logoContainer: {
+        textAlign: "center",
+    },
+    logo: {
+        margin: 10,
+        height: 100,
+        width: 100,
+        borderRadius: 50,
+        boxShadow: "0 8px 6px -6px black",
     },
     container: {
         width: "100%",
@@ -49,7 +59,7 @@ const styles = (theme) => ({
     shopCard: {
         width: "90%",
         marginTop: 10,
-        padding: "10px 10px",
+        // padding: "10px 10px",
     },
     transCard: {
         width: "90%",
@@ -62,6 +72,29 @@ const styles = (theme) => ({
         flexDirection: "column",
         alignItems: "center",
     },
+    fieldKey: {
+        marginTop: 15,
+        padding: 5,
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
+        color: "white",
+        background:
+            "linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898",
+        backgroundBlendMode: "multiply,multiply",
+    },
+    fieldValue: {
+        padding: 5,
+        backgroundColor: "#DCD9D4",
+        backgroundImage:
+            "linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%)",
+        backgroundBlendMode: "soft-light,screen",
+        boxShadow: "0 8px 6px -6px black",
+        borderBottomRightRadius: 5,
+        borderBottomLeftRadius: 5,
+    },
+    tableCell: {
+        padding: "4px",
+    }
 });
 
 function TabPanel(props) {
@@ -120,7 +153,10 @@ const UserShop = (props) => {
     return (
         <div className={classes.screen}>
             <StoreHeader>
-                <Avatar className={classes.avatar}>
+                <div className={classes.logoContainer}>
+                    <img src={logo} alt="logo" className={classes.logo} />
+                </div>
+                {/* <Avatar className={classes.avatar}>
                     <img
                         alt={shop.title}
                         src={logo}
@@ -129,7 +165,7 @@ const UserShop = (props) => {
                             width: 48,
                         }}
                     />
-                </Avatar>
+                </Avatar> */}
                 Demo Shop
             </StoreHeader>
             <AppBar position="static" color="default">

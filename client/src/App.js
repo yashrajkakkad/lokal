@@ -1,22 +1,22 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-  Route,
-} from "react-router-dom";
-import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import ReduxThunk from "redux-thunk";
+import {
+    BrowserRouter as Router,
 
-import Login from "./containers/Login";
-import Signup from "./containers/Signup";
-import SelectShop from "./containers/SelectShop";
-import UserShop from "./containers/UserShop";
-import OwnerShop from "./containers/OwnerShop";
-import OwnerSelectShop from "./containers/OwnerSelectShop";
-import authReducer from "./store/reducers/auth";
+    Redirect,
+    Route, Switch
+} from "react-router-dom";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import ReduxThunk from "redux-thunk";
 import "./App.css";
+import Login from "./containers/Login";
+import OwnerSelectShop from "./containers/OwnerSelectShop";
+import OwnerShop from "./containers/OwnerShop";
+import SelectShop from "./containers/SelectShop";
+import Signup from "./containers/Signup";
 import UserProfile from "./containers/UserProfile";
+import UserShop from "./containers/UserShop";
+import authReducer from "./store/reducers/auth";
+
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -34,6 +34,7 @@ function App() {
                     <Route exact path="/selectShop" component={SelectShop} />
                     <Route path="/userShop" component={UserShop} />
                     <Route exact path="/ownerShop" component={OwnerShop} />
+                    <Route exact path="/userProfile" component={UserProfile} />
                     <Route
                         exact
                         path="/ownerSelectShop"

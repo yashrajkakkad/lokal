@@ -15,8 +15,8 @@ const CircularProgressBar = (props) => {
                             value={value}
                             text={`${value}%`}
                             styles={buildStyles({
-                                pathColor: "#4a83fe",
-                                textColor: "#4a83fe",
+                                pathColor: "#424E5B",
+                                textColor: "#424E5B",
                             })}
                         />}
                     </ProgressProvider>
