@@ -4,7 +4,7 @@ import {
     Card,
     CircularProgress,
     Link,
-    TextField
+    TextField,
 } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -15,7 +15,6 @@ import { LockOutlined } from "@material-ui/icons";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as authActions from "../store/actions/auth";
-
 
 const styles = (theme) => ({
     screen: {
@@ -194,7 +193,7 @@ const SignupPage = (props) => {
                 <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">
                         Category
-          </InputLabel>
+                    </InputLabel>
                     <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
@@ -203,7 +202,7 @@ const SignupPage = (props) => {
                         label="Age"
                     >
                         <MenuItem value="member">Customer</MenuItem>
-                        <MenuItem value="owner">Owner</MenuItem>
+                        <MenuItem value="host">Host</MenuItem>
                     </Select>
                 </FormControl>
 
@@ -226,7 +225,7 @@ const SignupPage = (props) => {
                     }}
                 >
                     Already have an account? Log in.
-        </Link>
+                </Link>
             </Card>
         </div>
     );
