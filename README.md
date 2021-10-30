@@ -1,4 +1,5 @@
 # Lokal
+We managed to grab the 2nd runners-up place at Ingenious Hackathon 2021! Find our submission [here](https://devfolio.co/submissions/lokal-b8d1).
 
 ### Folder Structure
 
